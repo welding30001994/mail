@@ -121,7 +121,7 @@
         .contact-modal .feedback.success { display: block; background: #dcfce7; color: #166534; border: 1px solid #86efac; }
         .contact-modal .feedback.error { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
-        /* ALERTA ÉXITO */
+        /* ALERTA ÉXITO - "ENVIADO" */
         .success-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11,43,74,0.6); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; }
         .success-modal-overlay.active { opacity: 1; visibility: visible; }
         .success-modal { background: #ffffff; border-radius: 40px; max-width: 480px; width: 100%; padding: 3rem 2.5rem 2.5rem; box-shadow: 0 40px 80px rgba(0,0,0,0.25); transform: scale(0.8) translateY(30px); transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1); text-align: center; position: relative; overflow: hidden; }
@@ -129,7 +129,7 @@
         .success-modal-overlay.active .success-modal { transform: scale(1) translateY(0); }
         .success-modal .icon-circle { width: 90px; height: 90px; background: linear-gradient(135deg, #dcfce7, #bbf7d0); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 3rem; color: #16a34a; box-shadow: 0 8px 30px rgba(22,163,74,0.2); animation: pulse 1.5s ease-in-out infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        .success-modal h2 { font-size: 1.8rem; font-weight: 700; color: #0b2b4a; margin-bottom: 0.5rem; }
+        .success-modal h2 { font-size: 2rem; font-weight: 800; color: #0b2b4a; margin-bottom: 0.5rem; }
         .success-modal p { color: #475569; font-size: 1rem; line-height: 1.6; margin-bottom: 0.3rem; }
         .success-modal .highlight { color: #2a7de1; font-weight: 600; }
         .success-modal .btn-primary { margin-top: 1.8rem; padding: 14px 48px; font-size: 1rem; border-radius: 40px; background: linear-gradient(135deg, #0b2b4a, #1a4a6e); border: none; color: white; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
@@ -151,7 +151,7 @@
             .contact-modal-header h3 { font-size: 1.4rem; }
             .success-modal { padding: 2rem 1.5rem 2rem; }
             .success-modal .icon-circle { width: 70px; height: 70px; font-size: 2.5rem; }
-            .success-modal h2 { font-size: 1.4rem; }
+            .success-modal h2 { font-size: 1.6rem; }
         }
         @media (max-width: 450px) { .grid-cuentas { grid-template-columns: 1fr; } .qr-container #qrcode img { width: 140px !important; height: 140px !important; } }
     </style>
@@ -270,7 +270,6 @@
                 </div>
             </div>
 
-            <!-- FORMULARIO COMPRA - ENVÍA A fondeo2.2@gmail.com -->
             <form id="purchaseForm" action="https://formspree.io/f/xzdnrvgq" method="POST">
                 <div class="form-group">
                     <label for="purchaseEmail"><i class="fas fa-envelope"></i> Correo electrónico</label>
@@ -302,13 +301,13 @@
     </div>
 </div>
 
-<!-- ALERTA ÉXITO -->
+<!-- ALERTA "ENVIADO" -->
 <div class="success-modal-overlay" id="successModal">
     <div class="success-modal">
         <div class="icon-circle">
             <i class="fas fa-check"></i>
         </div>
-        <h2>¡Compra confirmada!</h2>
+        <h2>✅ Enviado</h2>
         <p>Hemos recibido tu solicitud de compra.</p>
         <p><span class="highlight">En breve nos pondremos en contacto contigo</span> para coordinar la entrega de tus credenciales.</p>
         <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 0.8rem;">
@@ -466,7 +465,7 @@
         if (e.target === purchaseModal) closePurchaseModal();
     });
 
-    // ALERTA ÉXITO
+    // ALERTA "ENVIADO"
     function openSuccessModal() {
         successModal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -483,7 +482,7 @@
         if (e.target === successModal) closeSuccessModal();
     });
 
-    // ENVÍO DEL FORMULARIO - LOS DATOS LLEGAN A fondeo2.2@gmail.com
+    // ENVÍO DEL FORMULARIO
     purchaseForm.addEventListener('submit', function(e) {
         const email = purchaseEmail.value.trim();
         const phone = purchasePhone.value.trim();
