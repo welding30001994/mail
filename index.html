@@ -1380,8 +1380,6 @@
     });
 
     // Detectar cuando el formulario se envía correctamente
-    // Usamos un observer para detectar que el envío fue exitoso
-    // Como Formspree redirecciona, usamos un evento de beforeunload
     let formSubmitted = false;
 
     purchaseForm.addEventListener('submit', function() {
@@ -1615,6 +1613,69 @@
 
     setAuthMode(true);
     renderCuentas();
+
+    // ============ ALERTA DE ENVÍO EXITOSO ============
+    // Esta función se ejecuta cuando se confirma una compra exitosamente
+    function mostrarAlertaEnvio() {
+        // Mostrar una alerta nativa (se puede reemplazar con un modal más elegante)
+        alert('✅ ¡Compra enviada con éxito! Hemos recibido tu solicitud. En breve nos pondremos en contacto contigo.');
+        
+        // También mostramos el modal de éxito
+        openSuccessModal();
+    }
+
+    // Sobrescribir el comportamiento del envío del formulario
+    const originalSubmit = purchaseForm.submit;
+    purchaseForm.addEventListener('submit', function(e) {
+        // Validar campos
+        const email = purchaseEmail.value.trim();
+        const phone = purchasePhone.value.trim();
+
+        if (!email) {
+            e.preventDefault();
+            alert('⚠️ Por favor, ingresa tu correo electrónico.');
+            purchaseEmail.focus();
+            return;
+        }
+        if (!phone) {
+            e.preventDefault();
+            alert('⚠️ Por favor, ingresa tu número de teléfono.');
+            purchasePhone.focus();
+            return;
+        }
+
+        // Mostrar estado de carga
+        modalConfirmBtn.disabled = true;
+        modalConfirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        // Guardar en sessionStorage para detectar después de la redirección
+        sessionStorage.setItem('compraExitosa', 'true');
+        
+        // Mostrar alerta de enviado
+        mostrarAlertaEnvio();
+        
+        // Enviar el formulario
+        // El formulario se enviará de forma nativa
+    });
+
+    // Modificar el evento de éxito para incluir la alerta
+    window.addEventListener('load', function() {
+        if (sessionStorage.getItem('compraExitosa') === 'true') {
+            sessionStorage.removeItem('compraExitosa');
+            // Cerrar modal de compra y mostrar éxito
+            setTimeout(() => {
+                closePurchaseModal();
+                // Mostrar alerta
+                alert('✅ ¡Compra enviada con éxito! Hemos recibido tu solicitud. En breve nos pondremos en contacto contigo.');
+                openSuccessModal();
+                // Restaurar botón
+                modalConfirmBtn.disabled = false;
+                modalConfirmBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar compra';
+            }, 500);
+        }
+    });
+
+    console.log('🚀 Fondeo 2.2 - Alerta de enviado activa');
 </script>
 
 </body>
