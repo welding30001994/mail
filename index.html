@@ -1,324 +1,1219 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-  <title>Fondeo 2.2 · Futurista</title>
-  <!-- Google Font para un toque tecnológico -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome para iconos (opcional pero da carácter) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fondeo Instantáneo · Contacto</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <!-- QRCode.js para generar el código QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 20% 30%, #0b0d1a, #03050b);
-      font-family: 'Space Grotesk', sans-serif;
-      padding: 1.5rem;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f6f9fc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
 
-    /* contenedor principal con efecto neón / vidrio futurista */
-    .form-wrapper {
-      max-width: 640px;
-      width: 100%;
-      background: rgba(12, 20, 35, 0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(0, 255, 255, 0.25);
-      border-radius: 3.5rem 1.5rem 3.5rem 1.5rem;
-      padding: 2.8rem 2.2rem;
-      box-shadow: 0 20px 50px rgba(0, 180, 255, 0.15), inset 0 0 0 1px rgba(0, 255, 255, 0.08);
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
-    }
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 48px;
+            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.08), 0 10px 30px rgba(0, 0, 0, 0.02);
+            padding: 2.5rem 2.5rem 3rem;
+            transition: all 0.2s ease;
+        }
 
-    .form-wrapper:hover {
-      box-shadow: 0 30px 70px rgba(0, 200, 255, 0.25), inset 0 0 0 1px rgba(0, 255, 255, 0.3);
-      transform: scale(1.01);
-    }
+        /* Header */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
 
-    /* encabezado con nombre futurista */
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 2.5rem;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-      padding-bottom: 1rem;
-    }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .brand i {
-      font-size: 2.4rem;
-      color: #00e0ff;
-      text-shadow: 0 0 15px #00a6ff, 0 0 30px #0077ff55;
-    }
+        .brand i {
+            font-size: 2.2rem;
+            color: #0b2b4a;
+            background: #eef3f7;
+            padding: 10px;
+            border-radius: 18px;
+        }
 
-    .brand h1 {
-      font-weight: 600;
-      font-size: 2rem;
-      letter-spacing: 0.1em;
-      background: linear-gradient(135deg, #b3f0ff, #5ac8ff, #00d4ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 20px #0088ff55;
-      margin: 0;
-      line-height: 1.2;
-    }
+        .brand h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #0b2b4a;
+        }
 
-    .brand small {
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: #7fc9ff;
-      letter-spacing: 0.3em;
-      background: rgba(0, 200, 255, 0.08);
-      padding: 0.2rem 0.8rem;
-      border-radius: 30px;
-      border: 1px solid rgba(0, 200, 255, 0.2);
-      margin-left: auto;
-      text-transform: uppercase;
-    }
+        .brand span {
+            color: #2a7de1;
+        }
 
-    /* etiquetas y campos */
-    .field-group {
-      margin-bottom: 2rem;
-    }
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
-    label {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      font-weight: 500;
-      color: #b0e4ff;
-      letter-spacing: 0.02em;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      position: relative;
-    }
+        .user-area .email {
+            font-weight: 500;
+            color: #1e293b;
+            background: #f1f5f9;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
 
-    label i {
-      margin-right: 0.5rem;
-      color: #00ccff;
-      width: 1.4rem;
-      text-align: center;
-    }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #d0d9e4;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    input, textarea {
-      width: 100%;
-      padding: 0.9rem 1.2rem;
-      background: rgba(2, 12, 30, 0.7);
-      border: 1.5px solid rgba(0, 200, 255, 0.25);
-      border-radius: 1.8rem;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      color: #e8f5ff;
-      transition: all 0.25s ease;
-      backdrop-filter: blur(4px);
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
-      outline: none;
-    }
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
 
-    input:focus, textarea:focus {
-      border-color: #00e5ff;
-      box-shadow: 0 0 0 4px rgba(0, 200, 255, 0.2), inset 0 2px 8px #00000088;
-      background: rgba(6, 20, 45, 0.8);
-    }
+        .btn-primary {
+            background: #0b2b4a;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
 
-    input::placeholder, textarea::placeholder {
-      color: #6a8fb1;
-      font-weight: 300;
-      opacity: 0.7;
-      letter-spacing: 0.02em;
-    }
+        .btn-primary:hover {
+            background: #1a3f5f;
+            transform: scale(1.02);
+        }
 
-    textarea {
-      min-height: 140px;
-      resize: vertical;
-      border-radius: 2rem;
-    }
+        /* Auth forms */
+        .auth-section {
+            max-width: 420px;
+            margin: 1rem auto 2rem;
+            background: #f9fcff;
+            padding: 2rem 2rem 1.8rem;
+            border-radius: 32px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        }
 
-    /* campo de mensaje con un toque especial */
-    .message-area label i {
-      align-self: flex-start;
-      margin-top: 0.8rem;
-    }
+        .auth-section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0b2b4a;
+            margin-bottom: 0.25rem;
+        }
 
-    /* botón enviar – futurista con brillo */
-    .submit-btn {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      margin-top: 0.8rem;
-      background: linear-gradient(145deg, #002b4b, #001a30);
-      border: 1.5px solid #00d0ff;
-      border-radius: 3rem;
-      color: #e2f5ff;
-      font-weight: 600;
-      font-size: 1.25rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 0 15px rgba(0, 180, 255, 0.2), inset 0 0 8px rgba(0, 200, 255, 0.3);
-      font-family: 'Space Grotesk', sans-serif;
-    }
+        .auth-section p {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
 
-    .submit-btn i {
-      font-size: 1.3rem;
-      color: #00dcff;
-      transition: transform 0.2s ease;
-    }
+        .auth-section input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+            background: white;
+            transition: 0.2s;
+        }
 
-    .submit-btn:hover {
-      background: linear-gradient(145deg, #003f66, #00243f);
-      border-color: #4adcff;
-      box-shadow: 0 0 35px #00a6ff66, inset 0 0 20px #00b3ff55;
-      transform: scale(1.02);
-      color: white;
-    }
+        .auth-section input:focus {
+            outline: none;
+            border-color: #2a7de1;
+            box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.15);
+        }
 
-    .submit-btn:hover i {
-      transform: translateX(5px);
-      color: #7ae4ff;
-    }
+        .auth-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
 
-    .submit-btn:active {
-      transform: scale(0.97);
-      box-shadow: 0 0 20px #00a6ffaa;
-    }
+        .auth-row .btn-primary {
+            flex: 1;
+            text-align: center;
+        }
 
-    /* footer / mensaje de cortesía */
-    .form-footer {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: flex-end;
-      font-size: 0.7rem;
-      color: #4b789b;
-      letter-spacing: 0.1em;
-      border-top: 1px solid rgba(0, 200, 255, 0.1);
-      padding-top: 1rem;
-    }
+        .auth-switch {
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+            color: #475569;
+        }
 
-    .form-footer i {
-      color: #00bbff;
-      margin-right: 0.4rem;
-    }
+        .auth-switch a {
+            color: #2a7de1;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-    /* responsive: ajustes en móviles */
-    @media (max-width: 600px) {
-      .form-wrapper {
-        padding: 1.8rem 1.2rem;
-        border-radius: 2.5rem 1rem 2.5rem 1rem;
-      }
-      .brand {
-        flex-wrap: wrap;
-        gap: 0.2rem;
-      }
-      .brand h1 {
-        font-size: 1.7rem;
-        letter-spacing: 0.05em;
-      }
-      .brand small {
-        font-size: 0.6rem;
-        padding: 0.2rem 0.6rem;
-        margin-left: 0;
-      }
-      .brand i {
-        font-size: 2rem;
-      }
-      input, textarea {
-        padding: 0.7rem 1rem;
-        font-size: 0.95rem;
-      }
-      .submit-btn {
-        font-size: 1rem;
-        padding: 0.8rem 1.2rem;
-      }
-    }
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
 
-    @media (max-width: 400px) {
-      .brand h1 {
-        font-size: 1.3rem;
-      }
-      .form-wrapper {
-        padding: 1.5rem 0.9rem;
-      }
-    }
+        .error-msg {
+            color: #b91c1c;
+            background: #fee2e2;
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+        }
 
-    /* Efecto sutil de partículas (solo decorativo) */
-    .form-wrapper::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: radial-gradient(circle at 30% 40%, rgba(0, 200, 255, 0.03), transparent 70%);
-      z-index: -1;
-      border-radius: inherit;
-      pointer-events: none;
-    }
+        /* Home (cuentas) */
+        .home-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
 
-    .form-wrapper {
-      position: relative;
-      z-index: 1;
-    }
-  </style>
+        .home-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #0b2b4a;
+        }
+
+        .home-header h2 i {
+            color: #2a7de1;
+            margin-right: 10px;
+        }
+
+        .wallet-badge {
+            background: #eef7ff;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #0b2b4a;
+            border: 1px solid #d4e2f5;
+        }
+
+        .wallet-badge i {
+            margin-right: 8px;
+            color: #2a7de1;
+        }
+
+        .wallet-address {
+            background: #f8fafc;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            border: 1px dashed #94a3b8;
+            color: #1e293b;
+            margin: 10px 0 16px 0;
+            display: inline-block;
+            word-break: break-all;
+        }
+
+        .grid-cuentas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .cuenta-card {
+            background: #ffffff;
+            border: 1.5px solid #eef2f6;
+            border-radius: 28px;
+            padding: 1.5rem 0.8rem 1.2rem;
+            text-align: center;
+            transition: 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        }
+
+        .cuenta-card:hover {
+            transform: translateY(-4px);
+            border-color: #cbd9e9;
+            box-shadow: 0 12px 24px rgba(0, 20, 40, 0.04);
+        }
+
+        .cuenta-card .monto {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0b2b4a;
+            letter-spacing: -0.5px;
+        }
+
+        .cuenta-card .precio {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2a7de1;
+            margin: 6px 0 12px;
+        }
+
+        .cuenta-card .precio small {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .btn-comprar {
+            background: #0b2b4a;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 10px 0;
+            width: 100%;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 4px;
+        }
+
+        .btn-comprar:hover {
+            background: #1a3f5f;
+        }
+
+        .footer-note {
+            margin-top: 2.2rem;
+            font-size: 0.85rem;
+            color: #64748b;
+            border-top: 1px solid #e9eef3;
+            padding-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-note i {
+            color: #2a7de1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== FORMULARIO DE CONTACTO (nuevo) ===== */
+        .contact-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .contact-section .contact-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-section .contact-header i {
+            font-size: 2rem;
+            color: #2a7de1;
+            background: #eef7ff;
+            padding: 12px;
+            border-radius: 20px;
+        }
+
+        .contact-section .contact-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0b2b4a;
+        }
+
+        .contact-section .contact-header h3 span {
+            color: #2a7de1;
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-form label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .contact-form label i {
+            color: #2a7de1;
+            margin-right: 6px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            transition: 0.2s;
+            color: #0b2b4a;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2a7de1;
+            box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.08);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+            max-height: 200px;
+            border-radius: 24px;
+        }
+
+        .contact-form .char-counter {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .contact-form .char-counter span {
+            font-weight: 600;
+        }
+
+        .contact-form .btn-primary {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .contact-form .btn-primary i {
+            font-size: 1.1rem;
+        }
+
+        .contact-form .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* mensaje de éxito/error */
+        .contact-feedback {
+            margin-top: 1rem;
+            padding: 12px 18px;
+            border-radius: 30px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .contact-feedback.success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .contact-feedback.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        /* ----- MODAL ELEGANTE CON SCROLL ----- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 43, 74, 0.35);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: #ffffff;
+            border-radius: 40px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem 0.8rem 2rem;
+            flex-shrink: 0;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0b2b4a;
+            letter-spacing: -0.3px;
+        }
+
+        .modal-header h3 i {
+            color: #2a7de1;
+            margin-right: 10px;
+        }
+
+        .modal-close {
+            background: #f1f5f9;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: #e2e8f0;
+            color: #0b2b4a;
+        }
+
+        .modal-body-scroll {
+            padding: 0.5rem 2rem 0.5rem 2rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-body-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .modal-body-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .modal-body-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .modal-body-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .modal-body-scroll .detail-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+
+        .modal-body-scroll .detail-line span:last-child {
+            font-weight: 600;
+            color: #0b2b4a;
+        }
+
+        .modal-body-scroll .info-box {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin: 16px 0 10px;
+            font-size: 0.9rem;
+            color: #1e293b;
+            border-left: 4px solid #2a7de1;
+        }
+
+        .modal-body-scroll .info-box i {
+            color: #2a7de1;
+            margin-right: 8px;
+        }
+
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 12px 0 10px;
+            padding: 12px 16px;
+            background: #fafcff;
+            border-radius: 24px;
+            border: 1px solid #eef2f6;
+        }
+
+        .qr-container #qrcode {
+            margin: 4px 0 8px;
+        }
+
+        .qr-container #qrcode img {
+            border-radius: 8px;
+        }
+
+        .qr-container .wallet-address-modal {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #1e293b;
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 30px;
+            word-break: break-all;
+            text-align: center;
+            width: 100%;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .qr-container .wallet-address-modal i {
+            color: #2a7de1;
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .modal-body-scroll label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+            display: block;
+            margin: 14px 0 6px;
+        }
+
+        .modal-body-scroll input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            background: white;
+            transition: 0.2s;
+        }
+
+        .modal-body-scroll input:focus {
+            outline: none;
+            border-color: #2a7de1;
+            box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.12);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            padding: 0.8rem 2rem 1.5rem 2rem;
+            flex-shrink: 0;
+            border-top: 1px solid #f1f5f9;
+            margin-top: 4px;
+        }
+
+        .modal-footer .btn-primary {
+            padding: 12px 32px;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .modal-footer .btn-outline {
+            padding: 12px 24px;
+        }
+
+        @media (max-width: 650px) {
+            .container { padding: 1.5rem; }
+            .brand h1 { font-size: 1.4rem; }
+            .header { flex-direction: column; align-items: stretch; gap: 12px; }
+            .user-area { justify-content: flex-start; flex-wrap: wrap; }
+            .grid-cuentas { grid-template-columns: 1fr 1fr; }
+            .modal { max-height: 95vh; }
+            .modal-header { padding: 1.2rem 1.2rem 0.5rem 1.2rem; }
+            .modal-body-scroll { padding: 0.3rem 1.2rem 0.3rem 1.2rem; }
+            .modal-footer { padding: 0.8rem 1.2rem 1.2rem 1.2rem; }
+            .contact-section .contact-header h3 { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 450px) {
+            .grid-cuentas { grid-template-columns: 1fr; }
+            .qr-container #qrcode img { width: 140px !important; height: 140px !important; }
+        }
+    </style>
 </head>
 <body>
-  <div class="form-wrapper">
-    <!-- cabecera futurista con el nombre "Fondeo 2.2" y toque de empresa -->
-    <div class="brand">
-      <i class="fas fa-rocket"></i>
-      <h1>Fondeo 2.2</h1>
-      <small>NEXUS</small>
+
+<div class="container" id="appContainer">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="brand">
+            <i class="fas fa-rocket"></i>
+            <h1>Fondeo <span>Instantáneo</span></h1>
+        </div>
+        <div class="user-area" id="userArea">
+            <span class="email" id="userEmail">usuario@email.com</span>
+            <button class="btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Salir</button>
+        </div>
     </div>
 
-    <!-- FORMULARIO: acción a Formspree, método POST -->
-    <form action="https://formspree.io/f/mbdnokda" method="POST">
-      <!-- campo email -->
-      <div class="field-group">
-        <label for="email">
-          <span><i class="fas fa-envelope"></i> Correo electrónico</span>
-          <input type="email" id="email" name="email" placeholder="tu@dominio.future" required>
-        </label>
-      </div>
+    <!-- ========== SECCIÓN AUTH ========== -->
+    <div id="authSection" class="auth-section">
+        <h2 id="authTitle">Iniciar sesión</h2>
+        <p id="authSubtitle">Accede a tu cuenta de fondeo</p>
 
-      <!-- campo mensaje -->
-      <div class="field-group message-area">
-        <label for="message">
-          <span><i class="fas fa-comment-dots"></i> Mensaje</span>
-          <textarea id="message" name="message" placeholder="Escribe tu mensaje...  (mínimo 10 caracteres)" required></textarea>
-        </label>
-      </div>
+        <div id="errorMessage" class="error-msg"><i class="fas fa-exclamation-circle"></i> <span id="errorText">Error</span></div>
 
-      <!-- otros campos ocultos o adicionales (se puede extender) -->
-      <!-- <input type="hidden" name="_subject" value="Nuevo mensaje desde Fondeo 2.2"> -->
+        <input type="email" id="emailInput" placeholder="Correo electrónico" />
+        <input type="password" id="passwordInput" placeholder="Contraseña (mínimo 6 caracteres)" />
 
-      <!-- botón enviar con icono futurista -->
-      <button type="submit" class="submit-btn">
-        <span>Enviar</span>
-        <i class="fas fa-paper-plane"></i>
-      </button>
+        <div class="auth-row">
+            <button class="btn-primary" id="authActionBtn"><i class="fas fa-arrow-right"></i> Ingresar</button>
+        </div>
 
-      <div class="form-footer">
-        <i class="fas fa-lock"></i> 
-        <span>· conexión segura ·</span>
-        <span style="margin-left: 0.8rem;"><i class="fas fa-satellite-dish"></i> 2.2</span>
-      </div>
-    </form>
-  </div>
+        <div class="auth-switch" id="authSwitch">
+            ¿No tienes cuenta? <a id="toggleAuthLink">Regístrate</a>
+        </div>
+    </div>
+
+    <!-- ========== HOME (cuentas) ========== -->
+    <div id="homeSection" class="hidden">
+        <div class="home-header">
+            <h2><i class="fas fa-coins"></i> Cuentas de fondeo</h2>
+            <div class="wallet-badge"><i class="fas fa-wallet"></i> USDT (TRC20)</div>
+        </div>
+
+        <!-- Dirección de monedero -->
+        <div style="margin: 0 0 4px 0;">
+            <span style="font-weight: 600; color: #0b2b4a;"><i class="fas fa-qrcode"></i> Deposita aquí:</span>
+            <div class="wallet-address">
+                <i class="fas fa-copy" style="cursor:pointer; margin-right: 8px; color:#2a7de1;" id="copyWalletBtn"></i>
+                TCAgtcQNCecCRn5fV7ZrMa5euFzSyzPUu5
+            </div>
+        </div>
+
+        <!-- Grid de cuentas -->
+        <div class="grid-cuentas" id="cuentasGrid">
+            <!-- inyectado con JS -->
+        </div>
+
+        <!-- ===== NUEVO: FORMULARIO DE CONTACTO ===== -->
+        <div class="contact-section">
+            <div class="contact-header">
+                <i class="fas fa-envelope"></i>
+                <h3>¿Dudas? <span>Contáctanos</span></h3>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="contactEmail"><i class="fas fa-envelope"></i> Tu correo electrónico</label>
+                    <input type="email" id="contactEmail" placeholder="ejemplo@correo.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMessage"><i class="fas fa-comment-dots"></i> Mensaje (máx. 200 caracteres)</label>
+                    <textarea id="contactMessage" placeholder="Escribe tu consulta aquí..." maxlength="200" required></textarea>
+                    <div class="char-counter"><span id="charCount">0</span> / 200</div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="contactSubmitBtn">
+                    <i class="fas fa-paper-plane"></i> Enviar mensaje
+                </button>
+
+                <div id="contactFeedback" class="contact-feedback"></div>
+            </form>
+        </div>
+
+        <div class="footer-note">
+            <span><i class="fas fa-shield-alt"></i> Compra segura · Soporte 24/7</span>
+            <span><i class="fas fa-bolt"></i> Acreditación instantánea</span>
+        </div>
+    </div>
+</div>
+
+<!-- ========== MODAL CON SCROLL ========== -->
+<div class="modal-overlay" id="purchaseModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-gem"></i> Confirmar compra</h3>
+            <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="modal-body-scroll" id="modalBodyScroll">
+            <div class="detail-line">
+                <span>Cuenta</span>
+                <span id="modalMonto">$10,000</span>
+            </div>
+            <div class="detail-line">
+                <span>Precio</span>
+                <span id="modalPrecio">$650 USD</span>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i> Deposita el monto exacto en USDT (TRC20) a la dirección mostrada.
+            </div>
+
+            <div class="qr-container">
+                <div id="qrcode"></div>
+                <div class="wallet-address-modal">
+                    <i class="fas fa-copy" id="copyModalWalletBtn"></i>
+                    TCAgtcQNCecCRn5fV7ZrMa5euFzSyzPUu5
+                </div>
+            </div>
+
+            <label for="whatsappInput"><i class="fab fa-whatsapp"></i> Número de WhatsApp</label>
+            <input type="tel" id="whatsappInput" placeholder="Ej: +51 987 654 321" />
+            
+            <label for="emailConfirmInput"><i class="fas fa-envelope"></i> Correo electrónico (para credenciales)</label>
+            <input type="email" id="emailConfirmInput" placeholder="tu@email.com" />
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-outline" id="modalCancelBtn">Cancelar</button>
+            <button class="btn-primary" id="modalConfirmBtn"><i class="fas fa-check-circle"></i> Enviar datos</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============ CONFIGURACIÓN FIREBASE ============
+    const firebaseConfig = {
+        apiKey: "AIzaSyCpFnSLx-ZUq6j27T-w_nvsdSvUrNs688g",
+        authDomain: "heyding-kayser.firebaseapp.com",
+        databaseURL: "https://heyding-kayser-default-rtdb.firebaseio.com",
+        projectId: "heyding-kayser",
+        storageBucket: "heyding-kayser.firebasestorage.app",
+        messagingSenderId: "231005618306",
+        appId: "1:231005618306:web:b349379b513145b6e6349b",
+        measurementId: "G-0F9T839VVZ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // ============ ELEMENTOS DOM ============
+    const authSection = document.getElementById('authSection');
+    const homeSection = document.getElementById('homeSection');
+    const userEmail = document.getElementById('userEmail');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const authActionBtn = document.getElementById('authActionBtn');
+    const authTitle = document.getElementById('authTitle');
+    const authSubtitle = document.getElementById('authSubtitle');
+    const toggleAuthLink = document.getElementById('toggleAuthLink');
+    const errorMessage = document.getElementById('errorMessage');
+    const errorText = document.getElementById('errorText');
+    const cuentasGrid = document.getElementById('cuentasGrid');
+
+    // Elementos del formulario de contacto
+    const contactForm = document.getElementById('contactForm');
+    const contactEmail = document.getElementById('contactEmail');
+    const contactMessage = document.getElementById('contactMessage');
+    const charCount = document.getElementById('charCount');
+    const contactFeedback = document.getElementById('contactFeedback');
+    const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+
+    // Modal
+    const modal = document.getElementById('purchaseModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+    const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+    const modalMonto = document.getElementById('modalMonto');
+    const modalPrecio = document.getElementById('modalPrecio');
+    const whatsappInput = document.getElementById('whatsappInput');
+    const emailConfirmInput = document.getElementById('emailConfirmInput');
+
+    let isLogin = true;
+    let selectedAccount = null;
+    let qrCodeInstance = null;
+
+    const WALLET_ADDRESS = 'TCAgtcQNCecCRn5fV7ZrMa5euFzSyzPUu5';
+
+    // ============ DATOS DE CUENTAS ============
+    const cuentas = [
+        { monto: 10000, precio: 650 },
+        { monto: 25000, precio: 750 },
+        { monto: 50000, precio: 850 },
+        { monto: 100000, precio: 1200 },
+        { monto: 200000, precio: 2150 },
+        { monto: 500000, precio: 3500 },
+        { monto: 1000000, precio: 5000 }
+    ];
+
+    // ============ RENDER CUENTAS ============
+    function renderCuentas() {
+        cuentasGrid.innerHTML = '';
+        cuentas.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'cuenta-card';
+            card.innerHTML = `
+                <div class="monto">$${c.monto.toLocaleString()}</div>
+                <div class="precio">$${c.precio} <small>USD</small></div>
+                <button class="btn-comprar" data-monto="${c.monto}" data-precio="${c.precio}">
+                    <i class="fas fa-cart-plus"></i> Comprar
+                </button>
+            `;
+            cuentasGrid.appendChild(card);
+        });
+
+        document.querySelectorAll('.btn-comprar').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const monto = Number(this.dataset.monto);
+                const precio = Number(this.dataset.precio);
+                selectedAccount = { monto, precio };
+                openModal(monto, precio);
+            });
+        });
+    }
+
+    // ============ GENERAR QR ============
+    function generateQR(address) {
+        const qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = '';
+        qrCodeInstance = new QRCode(qrContainer, {
+            text: address,
+            width: 160,
+            height: 160,
+            colorDark: "#0b2b4a",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+
+    // ============ MODAL ============
+    function openModal(monto, precio) {
+        modalMonto.textContent = `$${monto.toLocaleString()}`;
+        modalPrecio.textContent = `$${precio} USD`;
+        
+        const user = auth.currentUser;
+        if (user && user.email) {
+            emailConfirmInput.value = user.email;
+        } else {
+            emailConfirmInput.value = '';
+        }
+        whatsappInput.value = '';
+        
+        generateQR(WALLET_ADDRESS);
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        const scrollContainer = document.getElementById('modalBodyScroll');
+        if (scrollContainer) {
+            scrollContainer.scrollTop = 0;
+        }
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalCancelBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+    });
+
+    modalConfirmBtn.addEventListener('click', function() {
+        const whatsapp = whatsappInput.value.trim();
+        const email = emailConfirmInput.value.trim();
+
+        if (!whatsapp) {
+            alert('⚠️ Por favor, ingresa tu número de WhatsApp.');
+            whatsappInput.focus();
+            return;
+        }
+        if (!email) {
+            alert('⚠️ Por favor, ingresa tu correo electrónico.');
+            emailConfirmInput.focus();
+            return;
+        }
+        if (!selectedAccount) return;
+
+        alert(`✅ ¡Gracias! Hemos recibido tu solicitud.\n\n📧 Las credenciales serán enviadas a:\n${email}\n\n📱 Te contactaremos por WhatsApp al:\n${whatsapp}\n\nRevisa tu bandeja de entrada en unos minutos.`);
+
+        closeModal();
+        whatsappInput.value = '';
+        emailConfirmInput.value = '';
+        selectedAccount = null;
+    });
+
+    document.getElementById('copyModalWalletBtn')?.addEventListener('click', function() {
+        navigator.clipboard?.writeText(WALLET_ADDRESS).then(() => {
+            alert('✅ Dirección copiada al portapapeles');
+        }).catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = WALLET_ADDRESS;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            alert('✅ Dirección copiada');
+        });
+    });
+
+    document.getElementById('copyWalletBtn')?.addEventListener('click', function() {
+        navigator.clipboard?.writeText(WALLET_ADDRESS).then(() => {
+            alert('✅ Dirección copiada al portapapeles');
+        }).catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = WALLET_ADDRESS;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            alert('✅ Dirección copiada');
+        });
+    });
+
+    // ============ ACTUALIZAR UI SEGÚN AUTENTICACIÓN ============
+    function updateUI(user) {
+        if (user) {
+            authSection.classList.add('hidden');
+            homeSection.classList.remove('hidden');
+            userEmail.textContent = user.email || 'usuario';
+            renderCuentas();
+            // Rellenar email de contacto con el del usuario
+            if (contactEmail) contactEmail.value = user.email || '';
+        } else {
+            authSection.classList.remove('hidden');
+            homeSection.classList.add('hidden');
+            emailInput.value = '';
+            passwordInput.value = '';
+            errorMessage.style.display = 'none';
+            setAuthMode(true);
+        }
+    }
+
+    // ============ MODO LOGIN / REGISTRO ============
+    function setAuthMode(login) {
+        isLogin = login;
+        if (login) {
+            authTitle.textContent = 'Iniciar sesión';
+            authSubtitle.textContent = 'Accede a tu cuenta de fondeo';
+            authActionBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Ingresar';
+            toggleAuthLink.textContent = 'Regístrate';
+        } else {
+            authTitle.textContent = 'Crear cuenta';
+            authSubtitle.textContent = 'Regístrate para acceder a las cuentas';
+            authActionBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrarse';
+            toggleAuthLink.textContent = 'Iniciar sesión';
+        }
+        errorMessage.style.display = 'none';
+    }
+
+    toggleAuthLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        setAuthMode(!isLogin);
+    });
+
+    async function handleAuthAction() {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!email || !password) {
+            showError('Por favor, completa todos los campos.');
+            return;
+        }
+        if (password.length < 6) {
+            showError('La contraseña debe tener al menos 6 caracteres.');
+            return;
+        }
+
+        try {
+            if (isLogin) {
+                await auth.signInWithEmailAndPassword(email, password);
+            } else {
+                await auth.createUserWithEmailAndPassword(email, password);
+            }
+        } catch (error) {
+            console.error(error);
+            let msg = error.message;
+            if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado.';
+            else if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta.';
+            else if (error.code === 'auth/email-already-in-use') msg = 'Este correo ya está registrado.';
+            else if (error.code === 'auth/invalid-email') msg = 'Correo inválido.';
+            showError(msg);
+        }
+    }
+
+    authActionBtn.addEventListener('click', handleAuthAction);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !authSection.classList.contains('hidden')) {
+            handleAuthAction();
+        }
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    function showError(msg) {
+        errorMessage.style.display = 'block';
+        errorText.textContent = msg;
+    }
+
+    logoutBtn.addEventListener('click', function() {
+        auth.signOut();
+    });
+
+    // ============ CONTADOR DE CARACTERES ============
+    contactMessage.addEventListener('input', function() {
+        const len = this.value.length;
+        charCount.textContent = len;
+        if (len >= 190) {
+            charCount.style.color = '#b91c1c';
+        } else {
+            charCount.style.color = '#94a3b8';
+        }
+    });
+
+    // ============ ENVÍO DEL FORMULARIO DE CONTACTO ============
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = contactEmail.value.trim();
+        const message = contactMessage.value.trim();
+
+        // Validaciones
+        if (!email) {
+            showContactFeedback('Por favor, ingresa tu correo electrónico.', 'error');
+            contactEmail.focus();
+            return;
+        }
+        if (!message) {
+            showContactFeedback('Por favor, escribe tu mensaje.', 'error');
+            contactMessage.focus();
+            return;
+        }
+        if (message.length > 200) {
+            showContactFeedback('El mensaje no puede superar los 200 caracteres.', 'error');
+            return;
+        }
+
+        // Deshabilitar botón durante el envío
+        contactSubmitBtn.disabled = true;
+        contactSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        try {
+            // Enviar a Formspree
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('message', message);
+            formData.append('_subject', 'Consulta desde Fondeo Instantáneo');
+
+            const response = await fetch('https://formspree.io/f/xzdnrvgq', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                showContactFeedback('✅ ¡Mensaje enviado! Te responderemos a la brevedad.', 'success');
+                contactMessage.value = '';
+                charCount.textContent = '0';
+                // No limpiamos el email para comodidad del usuario
+            } else {
+                const data = await response.json();
+                showContactFeedback('❌ Error al enviar: ' + (data.error || 'intenta nuevamente.'), 'error');
+            }
+        } catch (error) {
+            console.error(error);
+            showContactFeedback('❌ Error de conexión. Verifica tu internet.', 'error');
+        }
+
+        // Restaurar botón
+        contactSubmitBtn.disabled = false;
+        contactSubmitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
+    });
+
+    function showContactFeedback(msg, type) {
+        contactFeedback.textContent = msg;
+        contactFeedback.className = 'contact-feedback ' + type;
+        contactFeedback.style.display = 'block';
+        // Ocultar después de 6 segundos
+        clearTimeout(window._feedbackTimeout);
+        window._feedbackTimeout = setTimeout(() => {
+            contactFeedback.style.display = 'none';
+        }, 6000);
+    }
+
+    // ============ OBSERVADOR DE AUTENTICACIÓN ============
+    auth.onAuthStateChanged(user => {
+        updateUI(user);
+    });
+
+    setAuthMode(true);
+    renderCuentas();
+</script>
+
 </body>
 </html>
