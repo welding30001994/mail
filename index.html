@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Contacto</title>
+    <title>Formulario Futurista</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -13,205 +14,516 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
             padding: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .form-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
+        /* Grid de fondo futurista */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Líneas decorativas animadas */
+        .glow-line {
+            position: fixed;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, transparent);
+            animation: scanLine 8s linear infinite;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .glow-line:nth-child(1) { top: 10%; animation-delay: 0s; }
+        .glow-line:nth-child(2) { top: 30%; animation-delay: 2s; }
+        .glow-line:nth-child(3) { top: 60%; animation-delay: 4s; }
+        .glow-line:nth-child(4) { top: 85%; animation-delay: 6s; }
+
+        @keyframes scanLine {
+            0% { transform: translateX(-100%); width: 100%; opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateX(100%); width: 100%; opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.5s ease-out;
+            max-width: 550px;
+            animation: fadeIn 1s ease-out;
         }
 
-        @keyframes slideUp {
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(30px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
-        .form-container h2 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-            text-align: center;
+        /* Efecto de borde neón */
+        .form-wrapper {
+            position: relative;
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3px;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 255, 0.1),
+                0 0 80px rgba(255, 0, 255, 0.05),
+                inset 0 0 40px rgba(0, 255, 255, 0.05);
         }
 
-        .form-container .subtitle {
-            color: #888;
+        .form-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 26px;
+            background: conic-gradient(
+                from 0deg,
+                #00ffff,
+                #ff00ff,
+                #00ffff,
+                #ff00ff,
+                #00ffff
+            );
+            opacity: 0.3;
+            animation: rotateBorder 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .form-content {
+            background: rgba(10, 10, 20, 0.95);
+            border-radius: 22px;
+            padding: 40px 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Partículas de fondo */
+        .form-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255, 0, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header {
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 14px;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .header .subtitle {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            font-weight: 300;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .header .subtitle::before,
+        .header .subtitle::after {
+            content: '◈';
+            margin: 0 10px;
+            color: rgba(0, 255, 255, 0.3);
         }
 
         .form-group {
             margin-bottom: 25px;
+            position: relative;
         }
 
         .form-group label {
             display: block;
-            color: #555;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 8px;
-            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
         }
 
         .form-group label .required {
-            color: #e74c3c;
+            color: #ff00ff;
             margin-left: 4px;
+        }
+
+        .form-group .input-wrapper {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+        }
+
+        .form-group .input-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.05), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .form-group .input-wrapper:hover::before {
+            left: 100%;
+        }
+
+        .form-group .input-wrapper:focus-within {
+            border-color: #00ffff;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.1),
+                inset 0 0 20px rgba(0, 255, 255, 0.05);
+        }
+
+        .form-group .input-wrapper:focus-within::before {
+            left: 100%;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            padding: 14px 18px;
+            background: transparent;
+            border: none;
+            color: #fff;
             font-size: 15px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            background: #f8f9fa;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
             outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
+            position: relative;
+            z-index: 1;
         }
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
-            color: #aaa;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 300;
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        /* Icono decorativo en input */
+        .form-group .input-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(0, 255, 255, 0.2);
             font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
+            pointer-events: none;
             transition: all 0.3s ease;
+        }
+
+        .form-group .input-wrapper:focus-within .input-icon {
+            color: #00ffff;
+            opacity: 0.6;
+        }
+
+        .form-group textarea~.input-icon {
+            top: 18px;
+            transform: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(255, 0, 255, 0.15));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
             margin-top: 10px;
         }
 
-        .submit-btn:hover {
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.2),
+                0 0 60px rgba(255, 0, 255, 0.1);
+            border-color: #00ffff;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.25), rgba(255, 0, 255, 0.25));
         }
 
-        .submit-btn:active {
-            transform: translateY(0);
+        .btn-submit:hover::before {
+            left: 100%;
         }
 
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #aaa;
-            font-size: 13px;
+        .btn-submit:active {
+            transform: scale(0.98);
         }
 
-        .form-footer a {
-            color: #667eea;
-            text-decoration: none;
+        .btn-submit .btn-text {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
 
-        .form-footer a:hover {
-            text-decoration: underline;
+        .btn-submit .btn-text .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
         }
 
-        /* Mensaje de éxito/error (opcional) */
+        .btn-submit:hover .btn-text .arrow {
+            transform: translateX(5px);
+        }
+
+        /* Mensaje de alerta */
         .alert {
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 10px;
             margin-bottom: 20px;
             display: none;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            border: 1px solid transparent;
         }
 
         .alert.success {
             display: block;
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: rgba(0, 255, 200, 0.08);
+            color: #00ffcc;
+            border-color: rgba(0, 255, 200, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.05);
         }
 
         .alert.error {
             display: block;
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: rgba(255, 0, 100, 0.08);
+            color: #ff4477;
+            border-color: rgba(255, 0, 100, 0.2);
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.05);
+        }
+
+        .alert .alert-icon {
+            margin-right: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        .footer .status-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00ffff;
+            margin-right: 8px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .form-content {
+                padding: 25px 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .header .subtitle {
+                font-size: 10px;
+                letter-spacing: 2px;
+            }
+
+            .header .subtitle::before,
+            .header .subtitle::after {
+                margin: 0 6px;
+            }
+
+            .btn-submit {
+                font-size: 12px;
+                padding: 14px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                font-size: 14px;
+                padding: 12px 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .form-content {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 17px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>📧 Contáctanos</h2>
-        <p class="subtitle">Envía tu mensaje y te responderemos pronto</p>
+    <!-- Líneas decorativas animadas -->
+    <div class="glow-line"></div>
+    <div class="glow-line"></div>
+    <div class="glow-line"></div>
+    <div class="glow-line"></div>
 
-        <!-- Alerta de éxito/error (opcional) -->
-        <div id="alert" class="alert"></div>
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-content">
+                <div class="header">
+                    <h1>✦ Nexus ✦</h1>
+                    <p class="subtitle">Transmisión Entrante</p>
+                </div>
 
-        <form id="contactForm" action="https://formspree.io/f/mqerqbov" method="POST">
-            <div class="form-group">
-                <label for="email">
-                    Correo Electrónico
-                    <span class="required">*</span>
-                </label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    placeholder="ejemplo@correo.com" 
-                    required
-                >
+                <div id="alert" class="alert"></div>
+
+                <form id="contactForm" action="https://formspree.io/f/mbdnokda" method="POST">
+                    <div class="form-group">
+                        <label for="email">
+                            Identificador de Acceso
+                            <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                placeholder="operador@nexus.com" 
+                                required
+                            >
+                            <span class="input-icon">⌨</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">
+                            Canal de Comunicación
+                            <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <textarea 
+                                id="message" 
+                                name="message" 
+                                placeholder="Iniciando transmisión de datos..."
+                                required
+                            ></textarea>
+                            <span class="input-icon">✦</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span class="btn-text">
+                            <span>Transmitir</span>
+                            <span class="arrow">➜</span>
+                        </span>
+                    </button>
+                </form>
+
+                <div class="footer">
+                    <span class="status-dot"></span>
+                    CONEXIÓN SEGURA · ENCRIPTACIÓN CUÁNTICA
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="message">
-                    Mensaje
-                    <span class="required">*</span>
-                </label>
-                <textarea 
-                    id="message" 
-                    name="message" 
-                    placeholder="Escribe tu mensaje aquí..." 
-                    required
-                ></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">Enviar Mensaje ✉️</button>
-        </form>
-
-        <div class="form-footer">
-            Tus datos están seguros · <a href="#">Política de Privacidad</a>
         </div>
     </div>
 
     <script>
-        // Manejo del envío del formulario con feedback visual
         const form = document.getElementById('contactForm');
         const alertDiv = document.getElementById('alert');
 
@@ -219,12 +531,11 @@
             e.preventDefault();
 
             const formData = new FormData(this);
-            const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
+            const submitBtn = this.querySelector('.btn-submit');
+            const originalText = submitBtn.innerHTML;
 
-            // Deshabilitar botón y mostrar estado de carga
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Enviando... ⏳';
+            submitBtn.innerHTML = '<span class="btn-text"><span>⏳ TRANSMITIENDO</span><span class="arrow">◈</span></span>';
 
             try {
                 const response = await fetch(this.action, {
@@ -236,25 +547,20 @@
                 });
 
                 if (response.ok) {
-                    // Éxito
                     alertDiv.className = 'alert success';
-                    alertDiv.textContent = '✅ ¡Mensaje enviado exitosamente! Te contactaremos pronto.';
+                    alertDiv.innerHTML = '<span class="alert-icon">✔</span> Transmisión completada · Mensaje recibido con éxito';
                     this.reset();
                 } else {
-                    // Error del servidor
                     alertDiv.className = 'alert error';
-                    alertDiv.textContent = '❌ Hubo un error al enviar el mensaje. Intenta nuevamente.';
+                    alertDiv.innerHTML = '<span class="alert-icon">✖</span> Error en la transmisión · Intenta nuevamente';
                 }
             } catch (error) {
-                // Error de red
                 alertDiv.className = 'alert error';
-                alertDiv.textContent = '❌ Error de conexión. Verifica tu internet.';
+                alertDiv.innerHTML = '<span class="alert-icon">⚠</span> Fallo de conexión · Verifica tu red';
             } finally {
-                // Restaurar botón
                 submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                submitBtn.innerHTML = originalText;
 
-                // Ocultar alerta después de 5 segundos
                 setTimeout(() => {
                     alertDiv.className = 'alert';
                 }, 5000);
