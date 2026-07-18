@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fondeo 2.2 · Instantáneo</title>
-    <!-- Google Fonts & Font Awesome -->
+    <title>Fondeo 2.2 · Compras</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <!-- Firebase SDKs -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <!-- QRCode.js -->
@@ -34,9 +34,8 @@
             width: 100%;
             background: white;
             border-radius: 48px;
-            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.08), 0 10px 30px rgba(0, 0, 0, 0.02);
-            padding: 2.5rem 2.5rem 3rem;
-            transition: all 0.2s ease;
+            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.08);
+            padding: 2.5rem;
         }
 
         .header {
@@ -64,7 +63,6 @@
         .brand h1 {
             font-size: 1.8rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
             color: #0b2b4a;
         }
 
@@ -79,7 +77,6 @@
             background: #f1f5f9;
             padding: 4px 12px;
             border-radius: 20px;
-            margin-left: 4px;
         }
 
         .user-area {
@@ -115,23 +112,6 @@
             border-color: #94a3b8;
         }
 
-        .btn-primary {
-            background: #0b2b4a;
-            border: none;
-            padding: 10px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary:hover {
-            background: #1a3f5f;
-            transform: scale(1.02);
-        }
-
         .btn-contact-header {
             background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
             border: 1.5px solid #2a7de1;
@@ -154,15 +134,11 @@
             box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
         }
 
-        .btn-contact-header i {
-            font-size: 1rem;
-        }
-
         .auth-section {
             max-width: 420px;
             margin: 1rem auto 2rem;
             background: #f9fcff;
-            padding: 2rem 2rem 1.8rem;
+            padding: 2rem;
             border-radius: 32px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
@@ -209,6 +185,23 @@
             text-align: center;
         }
 
+        .btn-primary {
+            background: #0b2b4a;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary:hover {
+            background: #1a3f5f;
+            transform: scale(1.02);
+        }
+
         .auth-switch {
             margin-top: 1.2rem;
             font-size: 0.9rem;
@@ -220,10 +213,6 @@
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-        }
-
-        .auth-switch a:hover {
-            text-decoration: underline;
         }
 
         .error-msg {
@@ -677,7 +666,7 @@
             border-color: #94a3b8;
         }
 
-        /* ===== MODAL DE CONTACTO GENERAL ===== */
+        /* ===== MODAL DE CONTACTO ===== */
         .contact-modal-overlay {
             position: fixed;
             top: 0;
@@ -877,7 +866,7 @@
             border: 1px solid #fca5a5;
         }
 
-        /* ===== MODAL DE ÉXITO ===== */
+        /* ===== ALERTA DE ÉXITO ===== */
         .success-modal-overlay {
             position: fixed;
             top: 0;
@@ -942,6 +931,12 @@
             font-size: 3rem;
             color: #16a34a;
             box-shadow: 0 8px 30px rgba(22, 163, 74, 0.2);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .success-modal h2 {
@@ -1026,26 +1021,22 @@
         </div>
     </div>
 
-    <!-- ========== SECCIÓN AUTH ========== -->
+    <!-- AUTH -->
     <div id="authSection" class="auth-section">
         <h2 id="authTitle">Iniciar sesión</h2>
         <p id="authSubtitle">Accede a tu cuenta de fondeo</p>
-
         <div id="errorMessage" class="error-msg"><i class="fas fa-exclamation-circle"></i> <span id="errorText">Error</span></div>
-
         <input type="email" id="emailInput" placeholder="Correo electrónico" />
         <input type="password" id="passwordInput" placeholder="Contraseña (mínimo 6 caracteres)" />
-
         <div class="auth-row">
             <button class="btn-primary" id="authActionBtn"><i class="fas fa-arrow-right"></i> Ingresar</button>
         </div>
-
         <div class="auth-switch" id="authSwitch">
             ¿No tienes cuenta? <a id="toggleAuthLink">Regístrate</a>
         </div>
     </div>
 
-    <!-- ========== HOME ========== -->
+    <!-- HOME -->
     <div id="homeSection" class="hidden">
         <div class="home-header">
             <h2><i class="fas fa-coins"></i> Cuentas de fondeo</h2>
@@ -1069,7 +1060,7 @@
     </div>
 </div>
 
-<!-- ===== MODAL DE CONTACTO GENERAL ===== -->
+<!-- ===== MODAL DE CONTACTO ===== -->
 <div class="contact-modal-overlay" id="contactModal">
     <div class="contact-modal">
         <div class="contact-modal-header">
@@ -1106,6 +1097,7 @@
             <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body-scroll" id="modalBodyScroll">
+            <!-- Detalles de la cuenta -->
             <div class="detail-box">
                 <div class="detail-line">
                     <span>Cuenta</span>
@@ -1117,6 +1109,7 @@
                 </div>
             </div>
 
+            <!-- Dirección con QR -->
             <div class="info-box">
                 <i class="fas fa-info-circle"></i> Deposita el monto exacto en USDT (TRC20) a la dirección mostrada.
             </div>
@@ -1128,16 +1121,16 @@
                 </div>
             </div>
 
-            <!-- ===== FORMULARIO DE COMPRA CON FORMSPREE ===== -->
+            <!-- FORMULARIO DE COMPRA -->
             <form id="purchaseForm" action="https://formspree.io/f/xzdnrvgq" method="POST">
                 <div class="form-group">
-                    <label for="purchasePhone"><i class="fab fa-whatsapp"></i> Número de WhatsApp</label>
-                    <input type="tel" id="purchasePhone" name="phone" placeholder="Ej: +51 987 654 321" required />
+                    <label for="purchaseEmail"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                    <input type="email" id="purchaseEmail" name="email" placeholder="tu@email.com" required />
                 </div>
 
                 <div class="form-group">
-                    <label for="purchaseEmail"><i class="fas fa-envelope"></i> Correo electrónico (para credenciales)</label>
-                    <input type="email" id="purchaseEmail" name="email" placeholder="tu@email.com" required />
+                    <label for="purchasePhone"><i class="fas fa-phone"></i> Teléfono</label>
+                    <input type="tel" id="purchasePhone" name="phone" placeholder="+51 987 654 321" required />
                 </div>
 
                 <div class="form-group">
@@ -1145,7 +1138,7 @@
                     <textarea id="purchaseMessage" name="message" placeholder="Algún detalle adicional..." maxlength="200"></textarea>
                 </div>
 
-                <!-- Campos ocultos para enviar información del paquete -->
+                <!-- Campos ocultos -->
                 <input type="hidden" id="hiddenMonto" name="cuenta" value="" />
                 <input type="hidden" id="hiddenPrecio" name="precio" value="" />
                 <input type="hidden" name="_subject" value="NUEVA COMPRA - Fondeo 2.2" />
@@ -1153,7 +1146,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn-outline" id="modalCancelBtn">Cancelar</button>
                     <button type="submit" class="btn-primary" id="modalConfirmBtn">
-                        <i class="fas fa-check-circle"></i> Enviar datos
+                        <i class="fas fa-check-circle"></i> Confirmar compra
                     </button>
                 </div>
             </form>
@@ -1161,7 +1154,7 @@
     </div>
 </div>
 
-<!-- ===== MODAL DE ÉXITO ===== -->
+<!-- ===== ALERTA DE ÉXITO ===== -->
 <div class="success-modal-overlay" id="successModal">
     <div class="success-modal">
         <div class="icon-circle">
@@ -1180,7 +1173,7 @@
 </div>
 
 <script>
-    // ============ CONFIGURACIÓN FIREBASE ============
+    // ============ FIREBASE ============
     const firebaseConfig = {
         apiKey: "AIzaSyCpFnSLx-ZUq6j27T-w_nvsdSvUrNs688g",
         authDomain: "heyding-kayser.firebaseapp.com",
@@ -1195,7 +1188,7 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // ============ ELEMENTOS DOM ============
+    // ============ ELEMENTOS ============
     const authSection = document.getElementById('authSection');
     const homeSection = document.getElementById('homeSection');
     const userEmail = document.getElementById('userEmail');
@@ -1210,7 +1203,7 @@
     const errorText = document.getElementById('errorText');
     const cuentasGrid = document.getElementById('cuentasGrid');
 
-    // Contacto general
+    // Contacto
     const contactModal = document.getElementById('contactModal');
     const contactHeaderBtn = document.getElementById('contactHeaderBtn');
     const contactModalClose = document.getElementById('contactModalClose');
@@ -1246,7 +1239,7 @@
 
     const WALLET_ADDRESS = 'TCAgtcQNCecCRn5fV7ZrMa5euFzSyzPUu5';
 
-    // ============ DATOS DE CUENTAS ============
+    // ============ CUENTAS ============
     const cuentas = [
         { monto: 10000, precio: 650 },
         { monto: 25000, precio: 750 },
@@ -1284,7 +1277,7 @@
         });
     }
 
-    // ============ GENERAR QR ============
+    // ============ QR ============
     function generateQR(address) {
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = '';
@@ -1304,7 +1297,6 @@
         modalMonto.textContent = `$${montoFormateado}`;
         modalPrecio.textContent = `$${precio} USD`;
         
-        // Actualizar campos ocultos
         hiddenMonto.value = `$${montoFormateado}`;
         hiddenPrecio.value = `$${precio} USD`;
         
@@ -1335,7 +1327,7 @@
         if (e.target === purchaseModal) closePurchaseModal();
     });
 
-    // ============ MODAL DE ÉXITO ============
+    // ============ ALERTA DE ÉXITO ============
     function openSuccessModal() {
         successModal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -1352,7 +1344,7 @@
         if (e.target === successModal) closeSuccessModal();
     });
 
-    // ============ ENVÍO DEL FORMULARIO DE COMPRA ============
+    // ============ ENVÍO DEL FORMULARIO ============
     purchaseForm.addEventListener('submit', function(e) {
         const email = purchaseEmail.value.trim();
         const phone = purchasePhone.value.trim();
@@ -1365,20 +1357,18 @@
         }
         if (!phone) {
             e.preventDefault();
-            alert('⚠️ Por favor, ingresa tu número de WhatsApp.');
+            alert('⚠️ Por favor, ingresa tu número de teléfono.');
             purchasePhone.focus();
             return;
         }
 
-        // Mostrar estado de carga
         modalConfirmBtn.disabled = true;
         modalConfirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-        // Guardar en sessionStorage para detectar después de la redirección
         sessionStorage.setItem('compraExitosa', 'true');
     });
 
-    // Al cargar la página, verificar si viene de una compra exitosa
+    // Detectar compra exitosa
     window.addEventListener('load', function() {
         if (sessionStorage.getItem('compraExitosa') === 'true') {
             sessionStorage.removeItem('compraExitosa');
@@ -1386,7 +1376,7 @@
                 closePurchaseModal();
                 openSuccessModal();
                 modalConfirmBtn.disabled = false;
-                modalConfirmBtn.innerHTML = '<i class="fas fa-check-circle"></i> Enviar datos';
+                modalConfirmBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar compra';
             }, 500);
         }
     });
@@ -1422,7 +1412,6 @@
         contactGeneralCount.style.color = len >= 190 ? '#b91c1c' : '#94a3b8';
     });
 
-    // Envío de contacto general
     contactGeneralForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -1477,7 +1466,7 @@
         }, 6000);
     }
 
-    // ============ COPIAR DIRECCIÓN ============
+    // ============ COPIAR ============
     document.getElementById('copyModalWalletBtn')?.addEventListener('click', function() {
         navigator.clipboard?.writeText(WALLET_ADDRESS).then(() => {
             alert('✅ Dirección copiada');
