@@ -4,978 +4,136 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fondeo 2.2 · Compras</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <!-- QRCode.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f6f9fc;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            background: white;
-            border-radius: 48px;
-            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.08);
-            padding: 2.5rem;
-        }
-
-        .header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand i {
-            font-size: 2.2rem;
-            color: #0b2b4a;
-            background: #eef3f7;
-            padding: 10px;
-            border-radius: 18px;
-        }
-
-        .brand h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #0b2b4a;
-        }
-
-        .brand span {
-            color: #2a7de1;
-        }
-
-        .brand small {
-            font-size: 0.7rem;
-            color: #64748b;
-            font-weight: 400;
-            background: #f1f5f9;
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .user-area .email {
-            font-weight: 500;
-            color: #1e293b;
-            background: #f1f5f9;
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #d0d9e4;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #1e293b;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-outline:hover {
-            background: #f1f5f9;
-            border-color: #94a3b8;
-        }
-
-        .btn-contact-header {
-            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
-            border: 1.5px solid #2a7de1;
-            padding: 8px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 0 20px rgba(42, 125, 225, 0.15);
-        }
-
-        .btn-contact-header:hover {
-            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
-        }
-
-        .auth-section {
-            max-width: 420px;
-            margin: 1rem auto 2rem;
-            background: #f9fcff;
-            padding: 2rem;
-            border-radius: 32px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
-        }
-
-        .auth-section h2 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #0b2b4a;
-            margin-bottom: 0.25rem;
-        }
-
-        .auth-section p {
-            color: #64748b;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .auth-section input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            margin-bottom: 14px;
-            background: white;
-            transition: 0.2s;
-        }
-
-        .auth-section input:focus {
-            outline: none;
-            border-color: #2a7de1;
-            box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.15);
-        }
-
-        .auth-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 6px;
-        }
-
-        .auth-row .btn-primary {
-            flex: 1;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: #0b2b4a;
-            border: none;
-            padding: 10px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary:hover {
-            background: #1a3f5f;
-            transform: scale(1.02);
-        }
-
-        .auth-switch {
-            margin-top: 1.2rem;
-            font-size: 0.9rem;
-            color: #475569;
-        }
-
-        .auth-switch a {
-            color: #2a7de1;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .error-msg {
-            color: #b91c1c;
-            background: #fee2e2;
-            padding: 8px 14px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            margin-top: 6px;
-            display: none;
-        }
-
-        .home-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 1.8rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .home-header h2 {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: #0b2b4a;
-        }
-
-        .home-header h2 i {
-            color: #2a7de1;
-            margin-right: 10px;
-        }
-
-        .wallet-badge {
-            background: #eef7ff;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #0b2b4a;
-            border: 1px solid #d4e2f5;
-        }
-
-        .wallet-badge i {
-            margin-right: 8px;
-            color: #2a7de1;
-        }
-
-        .wallet-address {
-            background: #f8fafc;
-            padding: 10px 18px;
-            border-radius: 40px;
-            font-family: monospace;
-            font-size: 0.9rem;
-            border: 1px dashed #94a3b8;
-            color: #1e293b;
-            margin: 10px 0 16px 0;
-            display: inline-block;
-            word-break: break-all;
-        }
-
-        .grid-cuentas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 18px;
-            margin-top: 20px;
-        }
-
-        .cuenta-card {
-            background: #ffffff;
-            border: 1.5px solid #eef2f6;
-            border-radius: 28px;
-            padding: 1.5rem 0.8rem 1.2rem;
-            text-align: center;
-            transition: 0.2s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
-        }
-
-        .cuenta-card:hover {
-            transform: translateY(-4px);
-            border-color: #cbd9e9;
-            box-shadow: 0 12px 24px rgba(0, 20, 40, 0.04);
-        }
-
-        .cuenta-card .monto {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #0b2b4a;
-            letter-spacing: -0.5px;
-        }
-
-        .cuenta-card .precio {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #2a7de1;
-            margin: 6px 0 12px;
-        }
-
-        .cuenta-card .precio small {
-            font-weight: 400;
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        .btn-comprar {
-            background: linear-gradient(135deg, #0b2b4a, #1a3f5f);
-            border: none;
-            color: white;
-            font-weight: 600;
-            padding: 10px 0;
-            width: 100%;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 4px;
-            box-shadow: 0 4px 15px rgba(11, 43, 74, 0.15);
-        }
-
-        .btn-comprar:hover {
-            background: linear-gradient(135deg, #1a3f5f, #2a7de1);
-            transform: scale(1.03);
-            box-shadow: 0 6px 25px rgba(42, 125, 225, 0.25);
-        }
-
-        .footer-note {
-            margin-top: 2.2rem;
-            font-size: 0.85rem;
-            color: #64748b;
-            border-top: 1px solid #e9eef3;
-            padding-top: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-note i {
-            color: #2a7de1;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* ===== MODAL DE COMPRA ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 43, 74, 0.5);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            padding: 1rem;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal {
-            background: #ffffff;
-            border-radius: 40px;
-            max-width: 520px;
-            width: 100%;
-            max-height: 95vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 70% 30%, rgba(42, 125, 225, 0.03), transparent 60%);
-            pointer-events: none;
-        }
-
-        .modal-overlay.active .modal {
-            transform: scale(1) translateY(0);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.8rem 2rem 1rem 2rem;
-            flex-shrink: 0;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .modal-header h3 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #0b2b4a;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .modal-header h3 i {
-            color: #2a7de1;
-            background: #eef7ff;
-            padding: 8px 12px;
-            border-radius: 14px;
-            font-size: 1.3rem;
-        }
-
-        .modal-close {
-            background: #f1f5f9;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 1.3rem;
-            color: #475569;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close:hover {
-            background: #e2e8f0;
-            transform: rotate(90deg);
-        }
-
-        .modal-body-scroll {
-            padding: 1.5rem 2rem 1rem 2rem;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .modal-body-scroll::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .modal-body-scroll::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 10px;
-        }
-
-        .modal-body-scroll::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-
-        .detail-box {
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 1rem 1.5rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid #eef2f6;
-        }
-
-        .detail-box .detail-line {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 0.95rem;
-        }
-
-        .detail-box .detail-line:not(:last-child) {
-            border-bottom: 1px solid #eef2f6;
-        }
-
-        .detail-box .detail-line span:last-child {
-            font-weight: 700;
-            color: #0b2b4a;
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, #eef7ff, #f0f9ff);
-            border-radius: 20px;
-            padding: 14px 18px;
-            margin: 12px 0 16px;
-            font-size: 0.9rem;
-            color: #1e293b;
-            border-left: 4px solid #2a7de1;
-        }
-
-        .info-box i {
-            color: #2a7de1;
-            margin-right: 8px;
-        }
-
-        .qr-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 12px 0 16px;
-            padding: 16px;
-            background: #fafcff;
-            border-radius: 24px;
-            border: 2px solid #eef2f6;
-            transition: all 0.3s ease;
-        }
-
-        .qr-container:hover {
-            border-color: #2a7de1;
-            box-shadow: 0 4px 20px rgba(42, 125, 225, 0.08);
-        }
-
-        .qr-container #qrcode {
-            margin: 4px 0 10px;
-        }
-
-        .qr-container #qrcode img {
-            border-radius: 12px;
-        }
-
-        .qr-container .wallet-address-modal {
-            font-family: monospace;
-            font-size: 0.8rem;
-            color: #1e293b;
-            background: #f1f5f9;
-            padding: 8px 16px;
-            border-radius: 30px;
-            word-break: break-all;
-            text-align: center;
-            width: 100%;
-            border: 1px dashed #cbd5e1;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .qr-container .wallet-address-modal:hover {
-            background: #eef7ff;
-            border-color: #2a7de1;
-        }
-
-        .qr-container .wallet-address-modal i {
-            color: #2a7de1;
-            margin-right: 8px;
-        }
-
-        .modal-body-scroll .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .modal-body-scroll label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-
-        .modal-body-scroll label i {
-            color: #2a7de1;
-            margin-right: 8px;
-        }
-
-        .modal-body-scroll input,
-        .modal-body-scroll textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            transition: all 0.3s ease;
-            color: #0b2b4a;
-        }
-
-        .modal-body-scroll input:focus,
-        .modal-body-scroll textarea:focus {
-            outline: none;
-            border-color: #2a7de1;
-            box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.08);
-        }
-
-        .modal-body-scroll textarea {
-            resize: vertical;
-            min-height: 80px;
-            max-height: 150px;
-            border-radius: 24px;
-        }
-
-        .modal-footer {
-            display: flex;
-            gap: 12px;
-            padding: 1rem 2rem 1.8rem 2rem;
-            flex-shrink: 0;
-            border-top: 2px solid #f1f5f9;
-            margin-top: 4px;
-        }
-
-        .modal-footer .btn-primary {
-            flex: 2;
-            padding: 14px;
-            font-size: 1rem;
-            border-radius: 40px;
-            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .modal-footer .btn-primary:hover {
-            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
-        }
-
-        .modal-footer .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .modal-footer .btn-outline {
-            flex: 1;
-            padding: 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            background: transparent;
-            border: 2px solid #d0d9e4;
-            color: #1e293b;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .modal-footer .btn-outline:hover {
-            background: #f1f5f9;
-            border-color: #94a3b8;
-        }
-
-        /* ===== MODAL DE CONTACTO ===== */
-        .contact-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 43, 74, 0.5);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            padding: 1rem;
-        }
-
-        .contact-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .contact-modal {
-            background: #ffffff;
-            border-radius: 40px;
-            max-width: 520px;
-            width: 100%;
-            padding: 2.5rem 2.5rem 2rem;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-modal::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(42, 125, 225, 0.03), transparent 70%);
-            pointer-events: none;
-        }
-
-        .contact-modal-overlay.active .contact-modal {
-            transform: scale(1) translateY(0);
-        }
-
-        .contact-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.8rem;
-        }
-
-        .contact-modal-header h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0b2b4a;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .contact-modal-header h3 i {
-            color: #2a7de1;
-            background: #eef7ff;
-            padding: 10px;
-            border-radius: 16px;
-            font-size: 1.4rem;
-        }
-
-        .contact-modal-close {
-            background: #f1f5f9;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 1.3rem;
-            color: #475569;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .contact-modal-close:hover {
-            background: #e2e8f0;
-            transform: rotate(90deg);
-        }
-
-        .contact-modal .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-modal label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-
-        .contact-modal label i {
-            color: #2a7de1;
-            margin-right: 8px;
-        }
-
-        .contact-modal input,
-        .contact-modal textarea {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            transition: all 0.3s ease;
-            color: #0b2b4a;
-        }
-
-        .contact-modal input:focus,
-        .contact-modal textarea:focus {
-            outline: none;
-            border-color: #2a7de1;
-            box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.08);
-            transform: scale(1.01);
-        }
-
-        .contact-modal textarea {
-            resize: vertical;
-            min-height: 120px;
-            max-height: 180px;
-            border-radius: 24px;
-        }
-
-        .contact-modal .char-counter {
-            text-align: right;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-top: 6px;
-        }
-
-        .contact-modal .btn-primary {
-            width: 100%;
-            padding: 14px;
-            font-size: 1rem;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .contact-modal .btn-primary:hover {
-            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
-        }
-
-        .contact-modal .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .contact-modal .feedback {
-            margin-top: 1rem;
-            padding: 12px 18px;
-            border-radius: 30px;
-            font-weight: 500;
-            display: none;
-            text-align: center;
-        }
-
-        .contact-modal .feedback.success {
-            display: block;
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
-        }
-
-        .contact-modal .feedback.error {
-            display: block;
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
-        }
-
-        /* ===== ALERTA DE ÉXITO ===== */
-        .success-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 43, 74, 0.6);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            padding: 1rem;
-        }
-
-        .success-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .success-modal {
-            background: #ffffff;
-            border-radius: 40px;
-            max-width: 480px;
-            width: 100%;
-            padding: 3rem 2.5rem 2.5rem;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
-            transform: scale(0.8) translateY(30px);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .success-modal::before {
-            content: '';
-            position: absolute;
-            top: -60%;
-            left: -60%;
-            width: 220%;
-            height: 220%;
-            background: radial-gradient(circle at 50% 30%, rgba(42, 125, 225, 0.05), transparent 60%);
-            pointer-events: none;
-        }
-
-        .success-modal-overlay.active .success-modal {
-            transform: scale(1) translateY(0);
-        }
-
-        .success-modal .icon-circle {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 3rem;
-            color: #16a34a;
-            box-shadow: 0 8px 30px rgba(22, 163, 74, 0.2);
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .success-modal h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0b2b4a;
-            margin-bottom: 0.5rem;
-        }
-
-        .success-modal p {
-            color: #475569;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 0.3rem;
-        }
-
-        .success-modal .highlight {
-            color: #2a7de1;
-            font-weight: 600;
-        }
-
-        .success-modal .btn-primary {
-            margin-top: 1.8rem;
-            padding: 14px 48px;
-            font-size: 1rem;
-            border-radius: 40px;
-            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .success-modal .btn-primary:hover {
-            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
-            transform: scale(1.03);
-            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f6f9fc; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+        .container { max-width: 1100px; width: 100%; background: white; border-radius: 48px; box-shadow: 0 30px 60px rgba(0,20,40,0.08); padding: 2.5rem; }
+        .header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand i { font-size: 2.2rem; color: #0b2b4a; background: #eef3f7; padding: 10px; border-radius: 18px; }
+        .brand h1 { font-size: 1.8rem; font-weight: 800; color: #0b2b4a; }
+        .brand span { color: #2a7de1; }
+        .brand small { font-size: 0.7rem; color: #64748b; font-weight: 400; background: #f1f5f9; padding: 4px 12px; border-radius: 20px; }
+        .user-area { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .user-area .email { font-weight: 500; color: #1e293b; background: #f1f5f9; padding: 6px 16px; border-radius: 40px; font-size: 0.9rem; }
+        .btn-outline { background: transparent; border: 1.5px solid #d0d9e4; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; color: #1e293b; cursor: pointer; transition: 0.2s; }
+        .btn-outline:hover { background: #f1f5f9; border-color: #94a3b8; }
+        .btn-contact-header { background: linear-gradient(135deg, #0b2b4a, #1a4a6e); border: 1.5px solid #2a7de1; padding: 8px 24px; border-radius: 40px; font-weight: 600; color: white; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 20px rgba(42,125,225,0.15); }
+        .btn-contact-header:hover { background: linear-gradient(135deg, #1a4a6e, #2a7de1); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(42,125,225,0.3); }
+        .auth-section { max-width: 420px; margin: 1rem auto 2rem; background: #f9fcff; padding: 2rem; border-radius: 32px; box-shadow: 0 8px 20px rgba(0,0,0,0.02); }
+        .auth-section h2 { font-size: 1.6rem; font-weight: 700; color: #0b2b4a; margin-bottom: 0.25rem; }
+        .auth-section p { color: #64748b; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .auth-section input { width: 100%; padding: 14px 16px; border: 1.5px solid #e2e8f0; border-radius: 30px; font-size: 0.95rem; margin-bottom: 14px; background: white; transition: 0.2s; }
+        .auth-section input:focus { outline: none; border-color: #2a7de1; box-shadow: 0 0 0 3px rgba(42,125,225,0.15); }
+        .auth-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+        .auth-row .btn-primary { flex: 1; text-align: center; }
+        .btn-primary { background: #0b2b4a; border: none; padding: 10px 28px; border-radius: 40px; font-weight: 600; color: white; cursor: pointer; transition: 0.2s; font-size: 0.95rem; }
+        .btn-primary:hover { background: #1a3f5f; transform: scale(1.02); }
+        .auth-switch { margin-top: 1.2rem; font-size: 0.9rem; color: #475569; }
+        .auth-switch a { color: #2a7de1; font-weight: 600; text-decoration: none; cursor: pointer; }
+        .error-msg { color: #b91c1c; background: #fee2e2; padding: 8px 14px; border-radius: 40px; font-size: 0.85rem; margin-top: 6px; display: none; }
+        .home-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1.8rem; padding-bottom: 0.5rem; border-bottom: 2px solid #f1f5f9; }
+        .home-header h2 { font-size: 1.7rem; font-weight: 700; color: #0b2b4a; }
+        .home-header h2 i { color: #2a7de1; margin-right: 10px; }
+        .wallet-badge { background: #eef7ff; padding: 8px 20px; border-radius: 40px; font-size: 0.9rem; font-weight: 500; color: #0b2b4a; border: 1px solid #d4e2f5; }
+        .wallet-badge i { margin-right: 8px; color: #2a7de1; }
+        .wallet-address { background: #f8fafc; padding: 10px 18px; border-radius: 40px; font-family: monospace; font-size: 0.9rem; border: 1px dashed #94a3b8; color: #1e293b; margin: 10px 0 16px 0; display: inline-block; word-break: break-all; }
+        .grid-cuentas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin-top: 20px; }
+        .cuenta-card { background: #ffffff; border: 1.5px solid #eef2f6; border-radius: 28px; padding: 1.5rem 0.8rem 1.2rem; text-align: center; transition: 0.2s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.01); }
+        .cuenta-card:hover { transform: translateY(-4px); border-color: #cbd9e9; box-shadow: 0 12px 24px rgba(0,20,40,0.04); }
+        .cuenta-card .monto { font-size: 1.8rem; font-weight: 800; color: #0b2b4a; letter-spacing: -0.5px; }
+        .cuenta-card .precio { font-size: 1.2rem; font-weight: 700; color: #2a7de1; margin: 6px 0 12px; }
+        .cuenta-card .precio small { font-weight: 400; font-size: 0.8rem; color: #64748b; }
+        .btn-comprar { background: linear-gradient(135deg, #0b2b4a, #1a3f5f); border: none; color: white; font-weight: 600; padding: 10px 0; width: 100%; border-radius: 40px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; margin-top: 4px; box-shadow: 0 4px 15px rgba(11,43,74,0.15); }
+        .btn-comprar:hover { background: linear-gradient(135deg, #1a3f5f, #2a7de1); transform: scale(1.03); box-shadow: 0 6px 25px rgba(42,125,225,0.25); }
+        .footer-note { margin-top: 2.2rem; font-size: 0.85rem; color: #64748b; border-top: 1px solid #e9eef3; padding-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+        .footer-note i { color: #2a7de1; }
+        .hidden { display: none !important; }
+
+        /* MODAL COMPRA */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11,43,74,0.5); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal { background: #ffffff; border-radius: 40px; max-width: 520px; width: 100%; max-height: 95vh; display: flex; flex-direction: column; box-shadow: 0 40px 80px rgba(0,0,0,0.2); transform: scale(0.9) translateY(20px); transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); position: relative; overflow: hidden; }
+        .modal::before { content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 70% 30%, rgba(42,125,225,0.03), transparent 60%); pointer-events: none; }
+        .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 2rem 1rem 2rem; flex-shrink: 0; border-bottom: 2px solid #f1f5f9; }
+        .modal-header h3 { font-size: 1.6rem; font-weight: 700; color: #0b2b4a; display: flex; align-items: center; gap: 12px; }
+        .modal-header h3 i { color: #2a7de1; background: #eef7ff; padding: 8px 12px; border-radius: 14px; font-size: 1.3rem; }
+        .modal-close { background: #f1f5f9; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 1.3rem; color: #475569; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .modal-close:hover { background: #e2e8f0; transform: rotate(90deg); }
+        .modal-body-scroll { padding: 1.5rem 2rem 1rem 2rem; overflow-y: auto; flex: 1; }
+        .modal-body-scroll::-webkit-scrollbar { width: 4px; }
+        .modal-body-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .modal-body-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .detail-box { background: #f8fafc; border-radius: 20px; padding: 1rem 1.5rem; margin-bottom: 1.2rem; border: 1px solid #eef2f6; }
+        .detail-box .detail-line { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.95rem; }
+        .detail-box .detail-line:not(:last-child) { border-bottom: 1px solid #eef2f6; }
+        .detail-box .detail-line span:last-child { font-weight: 700; color: #0b2b4a; }
+        .info-box { background: linear-gradient(135deg, #eef7ff, #f0f9ff); border-radius: 20px; padding: 14px 18px; margin: 12px 0 16px; font-size: 0.9rem; color: #1e293b; border-left: 4px solid #2a7de1; }
+        .info-box i { color: #2a7de1; margin-right: 8px; }
+        .qr-container { display: flex; flex-direction: column; align-items: center; margin: 12px 0 16px; padding: 16px; background: #fafcff; border-radius: 24px; border: 2px solid #eef2f6; transition: all 0.3s ease; }
+        .qr-container:hover { border-color: #2a7de1; box-shadow: 0 4px 20px rgba(42,125,225,0.08); }
+        .qr-container #qrcode { margin: 4px 0 10px; }
+        .qr-container #qrcode img { border-radius: 12px; }
+        .qr-container .wallet-address-modal { font-family: monospace; font-size: 0.8rem; color: #1e293b; background: #f1f5f9; padding: 8px 16px; border-radius: 30px; word-break: break-all; text-align: center; width: 100%; border: 1px dashed #cbd5e1; transition: 0.3s; cursor: pointer; }
+        .qr-container .wallet-address-modal:hover { background: #eef7ff; border-color: #2a7de1; }
+        .qr-container .wallet-address-modal i { color: #2a7de1; margin-right: 8px; }
+        .modal-body-scroll .form-group { margin-bottom: 1.2rem; }
+        .modal-body-scroll label { display: block; font-weight: 600; font-size: 0.9rem; color: #1e293b; margin-bottom: 6px; }
+        .modal-body-scroll label i { color: #2a7de1; margin-right: 8px; }
+        .modal-body-scroll input, .modal-body-scroll textarea { width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 30px; font-size: 0.95rem; font-family: 'Inter', sans-serif; background: white; transition: all 0.3s ease; color: #0b2b4a; }
+        .modal-body-scroll input:focus, .modal-body-scroll textarea:focus { outline: none; border-color: #2a7de1; box-shadow: 0 0 0 4px rgba(42,125,225,0.08); }
+        .modal-body-scroll textarea { resize: vertical; min-height: 80px; max-height: 150px; border-radius: 24px; }
+        .modal-footer { display: flex; gap: 12px; padding: 1rem 2rem 1.8rem 2rem; flex-shrink: 0; border-top: 2px solid #f1f5f9; margin-top: 4px; }
+        .modal-footer .btn-primary { flex: 2; padding: 14px; font-size: 1rem; border-radius: 40px; background: linear-gradient(135deg, #0b2b4a, #1a4a6e); border: none; color: white; cursor: pointer; transition: all 0.3s ease; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .modal-footer .btn-primary:hover { background: linear-gradient(135deg, #1a4a6e, #2a7de1); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(42,125,225,0.3); }
+        .modal-footer .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .modal-footer .btn-outline { flex: 1; padding: 14px; border-radius: 40px; font-weight: 600; background: transparent; border: 2px solid #d0d9e4; color: #1e293b; cursor: pointer; transition: 0.3s; }
+        .modal-footer .btn-outline:hover { background: #f1f5f9; border-color: #94a3b8; }
+
+        /* CONTACTO */
+        .contact-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11,43,74,0.5); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; }
+        .contact-modal-overlay.active { opacity: 1; visibility: visible; }
+        .contact-modal { background: #ffffff; border-radius: 40px; max-width: 520px; width: 100%; padding: 2.5rem 2.5rem 2rem; box-shadow: 0 40px 80px rgba(0,0,0,0.2); transform: scale(0.9) translateY(20px); transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); position: relative; overflow: hidden; }
+        .contact-modal::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 20%, rgba(42,125,225,0.03), transparent 70%); pointer-events: none; }
+        .contact-modal-overlay.active .contact-modal { transform: scale(1) translateY(0); }
+        .contact-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.8rem; }
+        .contact-modal-header h3 { font-size: 1.8rem; font-weight: 700; color: #0b2b4a; display: flex; align-items: center; gap: 12px; }
+        .contact-modal-header h3 i { color: #2a7de1; background: #eef7ff; padding: 10px; border-radius: 16px; font-size: 1.4rem; }
+        .contact-modal-close { background: #f1f5f9; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 1.3rem; color: #475569; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .contact-modal-close:hover { background: #e2e8f0; transform: rotate(90deg); }
+        .contact-modal .form-group { margin-bottom: 1.5rem; }
+        .contact-modal label { display: block; font-weight: 600; font-size: 0.9rem; color: #1e293b; margin-bottom: 6px; }
+        .contact-modal label i { color: #2a7de1; margin-right: 8px; }
+        .contact-modal input, .contact-modal textarea { width: 100%; padding: 14px 18px; border: 2px solid #e2e8f0; border-radius: 30px; font-size: 0.95rem; font-family: 'Inter', sans-serif; background: white; transition: all 0.3s ease; color: #0b2b4a; }
+        .contact-modal input:focus, .contact-modal textarea:focus { outline: none; border-color: #2a7de1; box-shadow: 0 0 0 4px rgba(42,125,225,0.08); transform: scale(1.01); }
+        .contact-modal textarea { resize: vertical; min-height: 120px; max-height: 180px; border-radius: 24px; }
+        .contact-modal .char-counter { text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 6px; }
+        .contact-modal .btn-primary { width: 100%; padding: 14px; font-size: 1rem; border-radius: 40px; display: flex; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #0b2b4a, #1a4a6e); border: none; color: white; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .contact-modal .btn-primary:hover { background: linear-gradient(135deg, #1a4a6e, #2a7de1); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(42,125,225,0.3); }
+        .contact-modal .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .contact-modal .feedback { margin-top: 1rem; padding: 12px 18px; border-radius: 30px; font-weight: 500; display: none; text-align: center; }
+        .contact-modal .feedback.success { display: block; background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .contact-modal .feedback.error { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+        /* ALERTA ÉXITO */
+        .success-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11,43,74,0.6); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 1rem; }
+        .success-modal-overlay.active { opacity: 1; visibility: visible; }
+        .success-modal { background: #ffffff; border-radius: 40px; max-width: 480px; width: 100%; padding: 3rem 2.5rem 2.5rem; box-shadow: 0 40px 80px rgba(0,0,0,0.25); transform: scale(0.8) translateY(30px); transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1); text-align: center; position: relative; overflow: hidden; }
+        .success-modal::before { content: ''; position: absolute; top: -60%; left: -60%; width: 220%; height: 220%; background: radial-gradient(circle at 50% 30%, rgba(42,125,225,0.05), transparent 60%); pointer-events: none; }
+        .success-modal-overlay.active .success-modal { transform: scale(1) translateY(0); }
+        .success-modal .icon-circle { width: 90px; height: 90px; background: linear-gradient(135deg, #dcfce7, #bbf7d0); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 3rem; color: #16a34a; box-shadow: 0 8px 30px rgba(22,163,74,0.2); animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .success-modal h2 { font-size: 1.8rem; font-weight: 700; color: #0b2b4a; margin-bottom: 0.5rem; }
+        .success-modal p { color: #475569; font-size: 1rem; line-height: 1.6; margin-bottom: 0.3rem; }
+        .success-modal .highlight { color: #2a7de1; font-weight: 600; }
+        .success-modal .btn-primary { margin-top: 1.8rem; padding: 14px 48px; font-size: 1rem; border-radius: 40px; background: linear-gradient(135deg, #0b2b4a, #1a4a6e); border: none; color: white; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .success-modal .btn-primary:hover { background: linear-gradient(135deg, #1a4a6e, #2a7de1); transform: scale(1.03); box-shadow: 0 8px 30px rgba(42,125,225,0.3); }
 
         @media (max-width: 650px) {
             .container { padding: 1.5rem; }
@@ -995,18 +153,13 @@
             .success-modal .icon-circle { width: 70px; height: 70px; font-size: 2.5rem; }
             .success-modal h2 { font-size: 1.4rem; }
         }
-
-        @media (max-width: 450px) {
-            .grid-cuentas { grid-template-columns: 1fr; }
-            .qr-container #qrcode img { width: 140px !important; height: 140px !important; }
-        }
+        @media (max-width: 450px) { .grid-cuentas { grid-template-columns: 1fr; } .qr-container #qrcode img { width: 140px !important; height: 140px !important; } }
     </style>
 </head>
 <body>
 
 <div class="container" id="appContainer">
 
-    <!-- HEADER -->
     <div class="header">
         <div class="brand">
             <i class="fas fa-rocket"></i>
@@ -1021,7 +174,6 @@
         </div>
     </div>
 
-    <!-- AUTH -->
     <div id="authSection" class="auth-section">
         <h2 id="authTitle">Iniciar sesión</h2>
         <p id="authSubtitle">Accede a tu cuenta de fondeo</p>
@@ -1036,7 +188,6 @@
         </div>
     </div>
 
-    <!-- HOME -->
     <div id="homeSection" class="hidden">
         <div class="home-header">
             <h2><i class="fas fa-coins"></i> Cuentas de fondeo</h2>
@@ -1060,7 +211,7 @@
     </div>
 </div>
 
-<!-- ===== MODAL DE CONTACTO ===== -->
+<!-- MODAL CONTACTO -->
 <div class="contact-modal-overlay" id="contactModal">
     <div class="contact-modal">
         <div class="contact-modal-header">
@@ -1089,15 +240,14 @@
     </div>
 </div>
 
-<!-- ===== MODAL DE COMPRA ===== -->
+<!-- MODAL COMPRA -->
 <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
         <div class="modal-header">
             <h3><i class="fas fa-gem"></i> Confirmar compra</h3>
             <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
         </div>
-        <div class="modal-body-scroll" id="modalBodyScroll">
-            <!-- Detalles de la cuenta -->
+        <div class="modal-body-scroll">
             <div class="detail-box">
                 <div class="detail-line">
                     <span>Cuenta</span>
@@ -1109,7 +259,6 @@
                 </div>
             </div>
 
-            <!-- Dirección con QR -->
             <div class="info-box">
                 <i class="fas fa-info-circle"></i> Deposita el monto exacto en USDT (TRC20) a la dirección mostrada.
             </div>
@@ -1121,7 +270,7 @@
                 </div>
             </div>
 
-            <!-- FORMULARIO DE COMPRA -->
+            <!-- FORMULARIO COMPRA - ENVÍA A fondeo2.2@gmail.com -->
             <form id="purchaseForm" action="https://formspree.io/f/xzdnrvgq" method="POST">
                 <div class="form-group">
                     <label for="purchaseEmail"><i class="fas fa-envelope"></i> Correo electrónico</label>
@@ -1138,7 +287,6 @@
                     <textarea id="purchaseMessage" name="message" placeholder="Algún detalle adicional..." maxlength="200"></textarea>
                 </div>
 
-                <!-- Campos ocultos -->
                 <input type="hidden" id="hiddenMonto" name="cuenta" value="" />
                 <input type="hidden" id="hiddenPrecio" name="precio" value="" />
                 <input type="hidden" name="_subject" value="NUEVA COMPRA - Fondeo 2.2" />
@@ -1154,7 +302,7 @@
     </div>
 </div>
 
-<!-- ===== ALERTA DE ÉXITO ===== -->
+<!-- ALERTA ÉXITO -->
 <div class="success-modal-overlay" id="successModal">
     <div class="success-modal">
         <div class="icon-circle">
@@ -1173,7 +321,7 @@
 </div>
 
 <script>
-    // ============ FIREBASE ============
+    // FIREBASE
     const firebaseConfig = {
         apiKey: "AIzaSyCpFnSLx-ZUq6j27T-w_nvsdSvUrNs688g",
         authDomain: "heyding-kayser.firebaseapp.com",
@@ -1184,11 +332,10 @@
         appId: "1:231005618306:web:b349379b513145b6e6349b",
         measurementId: "G-0F9T839VVZ"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // ============ ELEMENTOS ============
+    // ELEMENTOS
     const authSection = document.getElementById('authSection');
     const homeSection = document.getElementById('homeSection');
     const userEmail = document.getElementById('userEmail');
@@ -1203,7 +350,7 @@
     const errorText = document.getElementById('errorText');
     const cuentasGrid = document.getElementById('cuentasGrid');
 
-    // Contacto
+    // CONTACTO
     const contactModal = document.getElementById('contactModal');
     const contactHeaderBtn = document.getElementById('contactHeaderBtn');
     const contactModalClose = document.getElementById('contactModalClose');
@@ -1215,7 +362,7 @@
     const contactGeneralFeedback = document.getElementById('contactGeneralFeedback');
     const contactGeneralSubmit = document.getElementById('contactGeneralSubmit');
 
-    // Compra
+    // COMPRA
     const purchaseModal = document.getElementById('purchaseModal');
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     const modalCancelBtn = document.getElementById('modalCancelBtn');
@@ -1229,17 +376,16 @@
     const hiddenMonto = document.getElementById('hiddenMonto');
     const hiddenPrecio = document.getElementById('hiddenPrecio');
 
-    // Éxito
+    // ÉXITO
     const successModal = document.getElementById('successModal');
     const successModalBtn = document.getElementById('successModalBtn');
 
     let isLogin = true;
     let selectedAccount = null;
     let qrCodeInstance = null;
-
     const WALLET_ADDRESS = 'TCAgtcQNCecCRn5fV7ZrMa5euFzSyzPUu5';
 
-    // ============ CUENTAS ============
+    // CUENTAS
     const cuentas = [
         { monto: 10000, precio: 650 },
         { monto: 25000, precio: 750 },
@@ -1250,7 +396,7 @@
         { monto: 1000000, precio: 5000 }
     ];
 
-    // ============ RENDER CUENTAS ============
+    // RENDER CUENTAS
     function renderCuentas() {
         cuentasGrid.innerHTML = '';
         cuentas.forEach(c => {
@@ -1268,7 +414,7 @@
         });
 
         document.querySelectorAll('.btn-comprar').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function() {
                 const monto = Number(this.dataset.monto);
                 const precio = Number(this.dataset.precio);
                 selectedAccount = { monto, precio };
@@ -1277,7 +423,7 @@
         });
     }
 
-    // ============ QR ============
+    // QR
     function generateQR(address) {
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = '';
@@ -1291,26 +437,19 @@
         });
     }
 
-    // ============ MODAL DE COMPRA ============
+    // ABRIR MODAL COMPRA
     function openPurchaseModal(monto, precio) {
         const montoFormateado = monto.toLocaleString();
         modalMonto.textContent = `$${montoFormateado}`;
         modalPrecio.textContent = `$${precio} USD`;
-        
         hiddenMonto.value = `$${montoFormateado}`;
         hiddenPrecio.value = `$${precio} USD`;
         
         const user = auth.currentUser;
-        if (user && user.email) {
-            purchaseEmail.value = user.email;
-        } else {
-            purchaseEmail.value = '';
-        }
+        purchaseEmail.value = user && user.email ? user.email : '';
         purchasePhone.value = '';
         purchaseMessage.value = '';
-        
         generateQR(WALLET_ADDRESS);
-        
         purchaseModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -1327,7 +466,7 @@
         if (e.target === purchaseModal) closePurchaseModal();
     });
 
-    // ============ ALERTA DE ÉXITO ============
+    // ALERTA ÉXITO
     function openSuccessModal() {
         successModal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -1344,7 +483,7 @@
         if (e.target === successModal) closeSuccessModal();
     });
 
-    // ============ ENVÍO DEL FORMULARIO ============
+    // ENVÍO DEL FORMULARIO - LOS DATOS LLEGAN A fondeo2.2@gmail.com
     purchaseForm.addEventListener('submit', function(e) {
         const email = purchaseEmail.value.trim();
         const phone = purchasePhone.value.trim();
@@ -1364,11 +503,10 @@
 
         modalConfirmBtn.disabled = true;
         modalConfirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-
         sessionStorage.setItem('compraExitosa', 'true');
     });
 
-    // Detectar compra exitosa
+    // DETECTAR COMPRA EXITOSA
     window.addEventListener('load', function() {
         if (sessionStorage.getItem('compraExitosa') === 'true') {
             sessionStorage.removeItem('compraExitosa');
@@ -1381,12 +519,10 @@
         }
     });
 
-    // ============ CONTACTO GENERAL ============
+    // CONTACTO GENERAL
     function openContactModal() {
         const user = auth.currentUser;
-        if (user && user.email) {
-            contactGeneralEmail.value = user.email;
-        }
+        contactGeneralEmail.value = user && user.email ? user.email : '';
         contactGeneralPhone.value = '';
         contactGeneralMsg.value = '';
         contactGeneralCount.textContent = '0';
@@ -1414,7 +550,6 @@
 
     contactGeneralForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
         const email = contactGeneralEmail.value.trim();
         const phone = contactGeneralPhone.value.trim();
         const message = contactGeneralMsg.value.trim();
@@ -1466,7 +601,7 @@
         }, 6000);
     }
 
-    // ============ COPIAR ============
+    // COPIAR
     document.getElementById('copyModalWalletBtn')?.addEventListener('click', function() {
         navigator.clipboard?.writeText(WALLET_ADDRESS).then(() => {
             alert('✅ Dirección copiada');
@@ -1495,7 +630,7 @@
         });
     });
 
-    // ============ AUTH ============
+    // AUTH
     function updateUI(user) {
         if (user) {
             authSection.classList.add('hidden');
