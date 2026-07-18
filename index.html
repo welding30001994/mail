@@ -39,7 +39,6 @@
             transition: all 0.2s ease;
         }
 
-        /* Header */
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -159,7 +158,6 @@
             font-size: 1rem;
         }
 
-        /* Auth forms */
         .auth-section {
             max-width: 420px;
             margin: 1rem auto 2rem;
@@ -238,7 +236,6 @@
             display: none;
         }
 
-        /* Home */
         .home-header {
             display: flex;
             justify-content: space-between;
@@ -370,206 +367,6 @@
 
         .hidden {
             display: none !important;
-        }
-
-        /* ===== CONTACTO GENERAL ===== */
-        .contact-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 43, 74, 0.5);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            padding: 1rem;
-        }
-
-        .contact-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .contact-modal {
-            background: #ffffff;
-            border-radius: 40px;
-            max-width: 520px;
-            width: 100%;
-            padding: 2.5rem 2.5rem 2rem;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-modal::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(42, 125, 225, 0.03), transparent 70%);
-            pointer-events: none;
-        }
-
-        .contact-modal-overlay.active .contact-modal {
-            transform: scale(1) translateY(0);
-        }
-
-        .contact-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.8rem;
-        }
-
-        .contact-modal-header h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0b2b4a;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .contact-modal-header h3 i {
-            color: #2a7de1;
-            background: #eef7ff;
-            padding: 10px;
-            border-radius: 16px;
-            font-size: 1.4rem;
-        }
-
-        .contact-modal-close {
-            background: #f1f5f9;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 1.3rem;
-            color: #475569;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .contact-modal-close:hover {
-            background: #e2e8f0;
-            transform: rotate(90deg);
-        }
-
-        .contact-modal .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-modal label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-
-        .contact-modal label i {
-            color: #2a7de1;
-            margin-right: 8px;
-        }
-
-        .contact-modal input,
-        .contact-modal textarea {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            transition: all 0.3s ease;
-            color: #0b2b4a;
-        }
-
-        .contact-modal input:focus,
-        .contact-modal textarea:focus {
-            outline: none;
-            border-color: #2a7de1;
-            box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.08);
-            transform: scale(1.01);
-        }
-
-        .contact-modal textarea {
-            resize: vertical;
-            min-height: 120px;
-            max-height: 180px;
-            border-radius: 24px;
-        }
-
-        .contact-modal .char-counter {
-            text-align: right;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-top: 6px;
-        }
-
-        .contact-modal .btn-primary {
-            width: 100%;
-            padding: 14px;
-            font-size: 1rem;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .contact-modal .btn-primary:hover {
-            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
-        }
-
-        .contact-modal .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .contact-modal .feedback {
-            margin-top: 1rem;
-            padding: 12px 18px;
-            border-radius: 30px;
-            font-weight: 500;
-            display: none;
-            text-align: center;
-        }
-
-        .contact-modal .feedback.success {
-            display: block;
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
-        }
-
-        .contact-modal .feedback.error {
-            display: block;
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
         }
 
         /* ===== MODAL DE COMPRA ===== */
@@ -786,10 +583,10 @@
         }
 
         .modal-body-scroll label {
+            display: block;
             font-weight: 600;
             font-size: 0.9rem;
             color: #1e293b;
-            display: block;
             margin-bottom: 6px;
         }
 
@@ -880,7 +677,207 @@
             border-color: #94a3b8;
         }
 
-        /* ===== MODAL DE CONFIRMACIÓN (éxito) ===== */
+        /* ===== MODAL DE CONTACTO GENERAL ===== */
+        .contact-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 43, 74, 0.5);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            padding: 1rem;
+        }
+
+        .contact-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-modal {
+            background: #ffffff;
+            border-radius: 40px;
+            max-width: 520px;
+            width: 100%;
+            padding: 2.5rem 2.5rem 2rem;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(42, 125, 225, 0.03), transparent 70%);
+            pointer-events: none;
+        }
+
+        .contact-modal-overlay.active .contact-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .contact-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .contact-modal-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b2b4a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-modal-header h3 i {
+            color: #2a7de1;
+            background: #eef7ff;
+            padding: 10px;
+            border-radius: 16px;
+            font-size: 1.4rem;
+        }
+
+        .contact-modal-close {
+            background: #f1f5f9;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-modal-close:hover {
+            background: #e2e8f0;
+            transform: rotate(90deg);
+        }
+
+        .contact-modal .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-modal label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .contact-modal label i {
+            color: #2a7de1;
+            margin-right: 8px;
+        }
+
+        .contact-modal input,
+        .contact-modal textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            transition: all 0.3s ease;
+            color: #0b2b4a;
+        }
+
+        .contact-modal input:focus,
+        .contact-modal textarea:focus {
+            outline: none;
+            border-color: #2a7de1;
+            box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.08);
+            transform: scale(1.01);
+        }
+
+        .contact-modal textarea {
+            resize: vertical;
+            min-height: 120px;
+            max-height: 180px;
+            border-radius: 24px;
+        }
+
+        .contact-modal .char-counter {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .contact-modal .btn-primary {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .contact-modal .btn-primary:hover {
+            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
+        }
+
+        .contact-modal .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .contact-modal .feedback {
+            margin-top: 1rem;
+            padding: 12px 18px;
+            border-radius: 30px;
+            font-weight: 500;
+            display: none;
+            text-align: center;
+        }
+
+        .contact-modal .feedback.success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .contact-modal .feedback.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        /* ===== MODAL DE ÉXITO ===== */
         .success-modal-overlay {
             position: fixed;
             top: 0;
@@ -1105,7 +1102,7 @@
 <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
         <div class="modal-header">
-            <h3><i class="fas fa-gem"></i> Comprar cuenta</h3>
+            <h3><i class="fas fa-gem"></i> Confirmar compra</h3>
             <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body-scroll" id="modalBodyScroll">
@@ -1131,16 +1128,16 @@
                 </div>
             </div>
 
-            <!-- FORMULARIO DE COMPRA CON FORMSPREE -->
+            <!-- ===== FORMULARIO DE COMPRA CON FORMSPREE ===== -->
             <form id="purchaseForm" action="https://formspree.io/f/xzdnrvgq" method="POST">
                 <div class="form-group">
-                    <label for="purchaseEmail"><i class="fas fa-envelope"></i> Correo electrónico</label>
-                    <input type="email" id="purchaseEmail" name="email" placeholder="tu@email.com" required />
+                    <label for="purchasePhone"><i class="fab fa-whatsapp"></i> Número de WhatsApp</label>
+                    <input type="tel" id="purchasePhone" name="phone" placeholder="Ej: +51 987 654 321" required />
                 </div>
 
                 <div class="form-group">
-                    <label for="purchasePhone"><i class="fas fa-phone"></i> Teléfono</label>
-                    <input type="tel" id="purchasePhone" name="phone" placeholder="+51 987 654 321" required />
+                    <label for="purchaseEmail"><i class="fas fa-envelope"></i> Correo electrónico (para credenciales)</label>
+                    <input type="email" id="purchaseEmail" name="email" placeholder="tu@email.com" required />
                 </div>
 
                 <div class="form-group">
@@ -1156,7 +1153,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn-outline" id="modalCancelBtn">Cancelar</button>
                     <button type="submit" class="btn-primary" id="modalConfirmBtn">
-                        <i class="fas fa-check-circle"></i> Confirmar compra
+                        <i class="fas fa-check-circle"></i> Enviar datos
                     </button>
                 </div>
             </form>
@@ -1266,8 +1263,9 @@
         cuentas.forEach(c => {
             const card = document.createElement('div');
             card.className = 'cuenta-card';
+            const montoFormateado = c.monto.toLocaleString();
             card.innerHTML = `
-                <div class="monto">$${c.monto.toLocaleString()}</div>
+                <div class="monto">$${montoFormateado}</div>
                 <div class="precio">$${c.precio} <small>USD</small></div>
                 <button class="btn-comprar" data-monto="${c.monto}" data-precio="${c.precio}">
                     <i class="fas fa-cart-plus"></i> Comprar
@@ -1302,11 +1300,12 @@
 
     // ============ MODAL DE COMPRA ============
     function openPurchaseModal(monto, precio) {
-        modalMonto.textContent = `$${monto.toLocaleString()}`;
+        const montoFormateado = monto.toLocaleString();
+        modalMonto.textContent = `$${montoFormateado}`;
         modalPrecio.textContent = `$${precio} USD`;
         
         // Actualizar campos ocultos
-        hiddenMonto.value = `$${monto.toLocaleString()}`;
+        hiddenMonto.value = `$${montoFormateado}`;
         hiddenPrecio.value = `$${precio} USD`;
         
         const user = auth.currentUser;
@@ -1366,7 +1365,7 @@
         }
         if (!phone) {
             e.preventDefault();
-            alert('⚠️ Por favor, ingresa tu número de teléfono.');
+            alert('⚠️ Por favor, ingresa tu número de WhatsApp.');
             purchasePhone.focus();
             return;
         }
@@ -1375,17 +1374,6 @@
         modalConfirmBtn.disabled = true;
         modalConfirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-        // El formulario se envía normalmente a Formspree
-        // Después del envío, se mostrará el modal de éxito
-    });
-
-    // Detectar cuando el formulario se envía correctamente
-    // Usamos un observer para detectar que el envío fue exitoso
-    // Como Formspree redirecciona, usamos un evento de beforeunload
-    let formSubmitted = false;
-
-    purchaseForm.addEventListener('submit', function() {
-        formSubmitted = true;
         // Guardar en sessionStorage para detectar después de la redirección
         sessionStorage.setItem('compraExitosa', 'true');
     });
@@ -1394,13 +1382,11 @@
     window.addEventListener('load', function() {
         if (sessionStorage.getItem('compraExitosa') === 'true') {
             sessionStorage.removeItem('compraExitosa');
-            // Cerrar modal de compra y mostrar éxito
             setTimeout(() => {
                 closePurchaseModal();
                 openSuccessModal();
-                // Restaurar botón
                 modalConfirmBtn.disabled = false;
-                modalConfirmBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar compra';
+                modalConfirmBtn.innerHTML = '<i class="fas fa-check-circle"></i> Enviar datos';
             }, 500);
         }
     });
