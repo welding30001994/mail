@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fondeo Instantáneo · Contacto</title>
+    <title>Fondeo Instantáneo · 2.2</title>
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <!-- QRCode.js para generar el código QR -->
+    <!-- QRCode.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         * {
@@ -77,6 +77,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            flex-wrap: wrap;
         }
 
         .user-area .email {
@@ -120,6 +121,33 @@
         .btn-primary:hover {
             background: #1a3f5f;
             transform: scale(1.02);
+        }
+
+        /* ===== BOTÓN CONTACTO EN CABECERA ===== */
+        .btn-contact-header {
+            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
+            border: 1.5px solid #2a7de1;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 20px rgba(42, 125, 225, 0.15);
+        }
+
+        .btn-contact-header:hover {
+            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
+        }
+
+        .btn-contact-header i {
+            font-size: 1rem;
         }
 
         /* Auth forms */
@@ -201,7 +229,7 @@
             display: none;
         }
 
-        /* Home (cuentas) */
+        /* Home */
         .home-header {
             display: flex;
             justify-content: space-between;
@@ -295,7 +323,7 @@
         }
 
         .btn-comprar {
-            background: #0b2b4a;
+            background: linear-gradient(135deg, #0b2b4a, #1a3f5f);
             border: none;
             color: white;
             font-weight: 600;
@@ -304,12 +332,15 @@
             border-radius: 40px;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.3s ease;
             margin-top: 4px;
+            box-shadow: 0 4px 15px rgba(11, 43, 74, 0.15);
         }
 
         .btn-comprar:hover {
-            background: #1a3f5f;
+            background: linear-gradient(135deg, #1a3f5f, #2a7de1);
+            transform: scale(1.03);
+            box-shadow: 0 6px 25px rgba(42, 125, 225, 0.25);
         }
 
         .footer-note {
@@ -332,48 +363,107 @@
             display: none !important;
         }
 
-        /* ===== FORMULARIO DE CONTACTO (nuevo) ===== */
-        .contact-section {
-            margin-top: 2.5rem;
-            padding-top: 2rem;
-            border-top: 2px solid #f1f5f9;
+        /* ===== CONTACTO GENERAL (en cabecera) ===== */
+        .contact-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 43, 74, 0.5);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            padding: 1rem;
         }
 
-        .contact-section .contact-header {
+        .contact-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-modal {
+            background: #ffffff;
+            border-radius: 40px;
+            max-width: 520px;
+            width: 100%;
+            padding: 2.5rem 2.5rem 2rem;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(42, 125, 225, 0.03), transparent 70%);
+            pointer-events: none;
+        }
+
+        .contact-modal-overlay.active .contact-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .contact-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .contact-modal-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b2b4a;
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+
+        .contact-modal-header h3 i {
+            color: #2a7de1;
+            background: #eef7ff;
+            padding: 10px;
+            border-radius: 16px;
+            font-size: 1.4rem;
+        }
+
+        .contact-modal-close {
+            background: #f1f5f9;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-modal-close:hover {
+            background: #e2e8f0;
+            transform: rotate(90deg);
+        }
+
+        .contact-modal .form-group {
             margin-bottom: 1.5rem;
         }
 
-        .contact-section .contact-header i {
-            font-size: 2rem;
-            color: #2a7de1;
-            background: #eef7ff;
-            padding: 12px;
-            border-radius: 20px;
-        }
-
-        .contact-section .contact-header h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #0b2b4a;
-        }
-
-        .contact-section .contact-header h3 span {
-            color: #2a7de1;
-        }
-
-        .contact-form {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-form .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .contact-form label {
+        .contact-modal label {
             display: block;
             font-weight: 600;
             font-size: 0.9rem;
@@ -381,50 +471,47 @@
             margin-bottom: 6px;
         }
 
-        .contact-form label i {
+        .contact-modal label i {
             color: #2a7de1;
-            margin-right: 6px;
+            margin-right: 8px;
         }
 
-        .contact-form input,
-        .contact-form textarea {
+        .contact-modal input,
+        .contact-modal textarea {
             width: 100%;
             padding: 14px 18px;
-            border: 1.5px solid #e2e8f0;
+            border: 2px solid #e2e8f0;
             border-radius: 30px;
             font-size: 0.95rem;
             font-family: 'Inter', sans-serif;
             background: white;
-            transition: 0.2s;
+            transition: all 0.3s ease;
             color: #0b2b4a;
         }
 
-        .contact-form input:focus,
-        .contact-form textarea:focus {
+        .contact-modal input:focus,
+        .contact-modal textarea:focus {
             outline: none;
             border-color: #2a7de1;
             box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.08);
+            transform: scale(1.01);
         }
 
-        .contact-form textarea {
+        .contact-modal textarea {
             resize: vertical;
             min-height: 120px;
-            max-height: 200px;
+            max-height: 180px;
             border-radius: 24px;
         }
 
-        .contact-form .char-counter {
+        .contact-modal .char-counter {
             text-align: right;
             font-size: 0.8rem;
             color: #94a3b8;
             margin-top: 6px;
         }
 
-        .contact-form .char-counter span {
-            font-weight: 600;
-        }
-
-        .contact-form .btn-primary {
+        .contact-modal .btn-primary {
             width: 100%;
             padding: 14px;
             font-size: 1rem;
@@ -433,57 +520,65 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
-        .contact-form .btn-primary i {
-            font-size: 1.1rem;
+        .contact-modal .btn-primary:hover {
+            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
         }
 
-        .contact-form .btn-primary:disabled {
+        .contact-modal .btn-primary:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
-        /* mensaje de éxito/error */
-        .contact-feedback {
+        .contact-modal .feedback {
             margin-top: 1rem;
             padding: 12px 18px;
             border-radius: 30px;
             font-weight: 500;
             display: none;
+            text-align: center;
         }
 
-        .contact-feedback.success {
+        .contact-modal .feedback.success {
             display: block;
             background: #dcfce7;
             color: #166534;
             border: 1px solid #86efac;
         }
 
-        .contact-feedback.error {
+        .contact-modal .feedback.error {
             display: block;
             background: #fee2e2;
             color: #991b1b;
             border: 1px solid #fca5a5;
         }
 
-        /* ----- MODAL ELEGANTE CON SCROLL ----- */
+        /* ===== MODAL DE COMPRA MEJORADO (futurista) ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 43, 74, 0.35);
-            backdrop-filter: blur(6px);
+            background: rgba(11, 43, 74, 0.5);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: all 0.4s ease;
             padding: 1rem;
         }
 
@@ -495,65 +590,81 @@
         .modal {
             background: #ffffff;
             border-radius: 40px;
-            max-width: 480px;
+            max-width: 520px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 95vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
-            transform: scale(0.95) translateY(10px);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-            opacity: 0;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, rgba(42, 125, 225, 0.03), transparent 60%);
+            pointer-events: none;
         }
 
         .modal-overlay.active .modal {
             transform: scale(1) translateY(0);
-            opacity: 1;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 2rem 0.8rem 2rem;
+            padding: 1.8rem 2rem 1rem 2rem;
             flex-shrink: 0;
+            border-bottom: 2px solid #f1f5f9;
         }
 
         .modal-header h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #0b2b4a;
-            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .modal-header h3 i {
             color: #2a7de1;
-            margin-right: 10px;
+            background: #eef7ff;
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 1.3rem;
         }
 
         .modal-close {
             background: #f1f5f9;
             border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 40px;
-            font-size: 1.2rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.3rem;
             color: #475569;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
         }
 
         .modal-close:hover {
             background: #e2e8f0;
-            color: #0b2b4a;
+            transform: rotate(90deg);
         }
 
         .modal-body-scroll {
-            padding: 0.5rem 2rem 0.5rem 2rem;
+            padding: 1.5rem 2rem 1rem 2rem;
             overflow-y: auto;
             flex: 1;
         }
@@ -576,30 +687,41 @@
             background: #94a3b8;
         }
 
-        .modal-body-scroll .detail-line {
+        .detail-box {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #eef2f6;
+        }
+
+        .detail-box .detail-line {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #f1f5f9;
+            padding: 8px 0;
             font-size: 0.95rem;
         }
 
-        .modal-body-scroll .detail-line span:last-child {
-            font-weight: 600;
+        .detail-box .detail-line:not(:last-child) {
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .detail-box .detail-line span:last-child {
+            font-weight: 700;
             color: #0b2b4a;
         }
 
-        .modal-body-scroll .info-box {
-            background: #f8fafc;
+        .info-box {
+            background: linear-gradient(135deg, #eef7ff, #f0f9ff);
             border-radius: 20px;
             padding: 14px 18px;
-            margin: 16px 0 10px;
+            margin: 12px 0 16px;
             font-size: 0.9rem;
             color: #1e293b;
             border-left: 4px solid #2a7de1;
         }
 
-        .modal-body-scroll .info-box i {
+        .info-box i {
             color: #2a7de1;
             margin-right: 8px;
         }
@@ -608,19 +730,25 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 12px 0 10px;
-            padding: 12px 16px;
+            margin: 12px 0 16px;
+            padding: 16px;
             background: #fafcff;
             border-radius: 24px;
-            border: 1px solid #eef2f6;
+            border: 2px solid #eef2f6;
+            transition: all 0.3s ease;
+        }
+
+        .qr-container:hover {
+            border-color: #2a7de1;
+            box-shadow: 0 4px 20px rgba(42, 125, 225, 0.08);
         }
 
         .qr-container #qrcode {
-            margin: 4px 0 8px;
+            margin: 4px 0 10px;
         }
 
         .qr-container #qrcode img {
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .qr-container .wallet-address-modal {
@@ -628,18 +756,28 @@
             font-size: 0.8rem;
             color: #1e293b;
             background: #f1f5f9;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 30px;
             word-break: break-all;
             text-align: center;
             width: 100%;
             border: 1px dashed #cbd5e1;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .qr-container .wallet-address-modal:hover {
+            background: #eef7ff;
+            border-color: #2a7de1;
         }
 
         .qr-container .wallet-address-modal i {
             color: #2a7de1;
-            margin-right: 6px;
-            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .modal-body-scroll .form-group {
+            margin-bottom: 1.2rem;
         }
 
         .modal-body-scroll label {
@@ -647,43 +785,88 @@
             font-size: 0.9rem;
             color: #1e293b;
             display: block;
-            margin: 14px 0 6px;
+            margin-bottom: 6px;
         }
 
-        .modal-body-scroll input {
+        .modal-body-scroll label i {
+            color: #2a7de1;
+            margin-right: 8px;
+        }
+
+        .modal-body-scroll input,
+        .modal-body-scroll textarea {
             width: 100%;
             padding: 12px 16px;
-            border: 1.5px solid #e2e8f0;
+            border: 2px solid #e2e8f0;
             border-radius: 30px;
             font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
             background: white;
-            transition: 0.2s;
+            transition: all 0.3s ease;
+            color: #0b2b4a;
         }
 
-        .modal-body-scroll input:focus {
+        .modal-body-scroll input:focus,
+        .modal-body-scroll textarea:focus {
             outline: none;
             border-color: #2a7de1;
-            box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.12);
+            box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.08);
+        }
+
+        .modal-body-scroll textarea {
+            resize: vertical;
+            min-height: 80px;
+            max-height: 150px;
+            border-radius: 24px;
         }
 
         .modal-footer {
             display: flex;
             gap: 12px;
-            justify-content: flex-end;
-            padding: 0.8rem 2rem 1.5rem 2rem;
+            padding: 1rem 2rem 1.8rem 2rem;
             flex-shrink: 0;
-            border-top: 1px solid #f1f5f9;
+            border-top: 2px solid #f1f5f9;
             margin-top: 4px;
         }
 
         .modal-footer .btn-primary {
-            padding: 12px 32px;
-            font-size: 0.95rem;
-            flex: 1;
+            flex: 2;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 40px;
+            background: linear-gradient(135deg, #0b2b4a, #1a4a6e);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-footer .btn-primary:hover {
+            background: linear-gradient(135deg, #1a4a6e, #2a7de1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(42, 125, 225, 0.3);
         }
 
         .modal-footer .btn-outline {
-            padding: 12px 24px;
+            flex: 1;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            background: transparent;
+            border: 2px solid #d0d9e4;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .modal-footer .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
         }
 
         @media (max-width: 650px) {
@@ -693,10 +876,13 @@
             .user-area { justify-content: flex-start; flex-wrap: wrap; }
             .grid-cuentas { grid-template-columns: 1fr 1fr; }
             .modal { max-height: 95vh; }
-            .modal-header { padding: 1.2rem 1.2rem 0.5rem 1.2rem; }
-            .modal-body-scroll { padding: 0.3rem 1.2rem 0.3rem 1.2rem; }
-            .modal-footer { padding: 0.8rem 1.2rem 1.2rem 1.2rem; }
-            .contact-section .contact-header h3 { font-size: 1.2rem; }
+            .modal-header { padding: 1.2rem 1.2rem 0.8rem 1.2rem; }
+            .modal-body-scroll { padding: 1rem 1.2rem 0.8rem 1.2rem; }
+            .modal-footer { padding: 0.8rem 1.2rem 1.2rem 1.2rem; flex-direction: column; }
+            .modal-footer .btn-outline { order: 2; }
+            .modal-footer .btn-primary { order: 1; }
+            .contact-modal { padding: 1.8rem 1.5rem 1.5rem; }
+            .contact-modal-header h3 { font-size: 1.4rem; }
         }
 
         @media (max-width: 450px) {
@@ -713,10 +899,14 @@
     <div class="header">
         <div class="brand">
             <i class="fas fa-rocket"></i>
-            <h1>Fondeo <span>Instantáneo</span></h1>
+            <h1>Fondeo <span>2.2</span></h1>
         </div>
         <div class="user-area" id="userArea">
             <span class="email" id="userEmail">usuario@email.com</span>
+            <!-- BOTÓN CONTACTO EN CABECERA -->
+            <button class="btn-contact-header" id="contactHeaderBtn">
+                <i class="fas fa-envelope"></i> Contacto
+            </button>
             <button class="btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Salir</button>
         </div>
     </div>
@@ -740,14 +930,13 @@
         </div>
     </div>
 
-    <!-- ========== HOME (cuentas) ========== -->
+    <!-- ========== HOME ========== -->
     <div id="homeSection" class="hidden">
         <div class="home-header">
             <h2><i class="fas fa-coins"></i> Cuentas de fondeo</h2>
             <div class="wallet-badge"><i class="fas fa-wallet"></i> USDT (TRC20)</div>
         </div>
 
-        <!-- Dirección de monedero -->
         <div style="margin: 0 0 4px 0;">
             <span style="font-weight: 600; color: #0b2b4a;"><i class="fas fa-qrcode"></i> Deposita aquí:</span>
             <div class="wallet-address">
@@ -756,37 +945,7 @@
             </div>
         </div>
 
-        <!-- Grid de cuentas -->
-        <div class="grid-cuentas" id="cuentasGrid">
-            <!-- inyectado con JS -->
-        </div>
-
-        <!-- ===== NUEVO: FORMULARIO DE CONTACTO ===== -->
-        <div class="contact-section">
-            <div class="contact-header">
-                <i class="fas fa-envelope"></i>
-                <h3>¿Dudas? <span>Contáctanos</span></h3>
-            </div>
-
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <label for="contactEmail"><i class="fas fa-envelope"></i> Tu correo electrónico</label>
-                    <input type="email" id="contactEmail" placeholder="ejemplo@correo.com" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="contactMessage"><i class="fas fa-comment-dots"></i> Mensaje (máx. 200 caracteres)</label>
-                    <textarea id="contactMessage" placeholder="Escribe tu consulta aquí..." maxlength="200" required></textarea>
-                    <div class="char-counter"><span id="charCount">0</span> / 200</div>
-                </div>
-
-                <button type="submit" class="btn-primary" id="contactSubmitBtn">
-                    <i class="fas fa-paper-plane"></i> Enviar mensaje
-                </button>
-
-                <div id="contactFeedback" class="contact-feedback"></div>
-            </form>
-        </div>
+        <div class="grid-cuentas" id="cuentasGrid"></div>
 
         <div class="footer-note">
             <span><i class="fas fa-shield-alt"></i> Compra segura · Soporte 24/7</span>
@@ -795,45 +954,88 @@
     </div>
 </div>
 
-<!-- ========== MODAL CON SCROLL ========== -->
+<!-- ===== MODAL DE CONTACTO GENERAL (en cabecera) ===== -->
+<div class="contact-modal-overlay" id="contactModal">
+    <div class="contact-modal">
+        <div class="contact-modal-header">
+            <h3><i class="fas fa-comment-dots"></i> Contáctanos</h3>
+            <button class="contact-modal-close" id="contactModalClose"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="contactGeneralForm">
+            <div class="form-group">
+                <label for="contactGeneralEmail"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                <input type="email" id="contactGeneralEmail" placeholder="tu@email.com" required />
+            </div>
+            <div class="form-group">
+                <label for="contactGeneralPhone"><i class="fas fa-phone"></i> Teléfono</label>
+                <input type="tel" id="contactGeneralPhone" placeholder="+51 987 654 321" required />
+            </div>
+            <div class="form-group">
+                <label for="contactGeneralMsg"><i class="fas fa-comment"></i> Mensaje (máx. 200 caracteres)</label>
+                <textarea id="contactGeneralMsg" placeholder="Escribe tu consulta..." maxlength="200" required></textarea>
+                <div class="char-counter"><span id="contactGeneralCount">0</span> / 200</div>
+            </div>
+            <button type="submit" class="btn-primary" id="contactGeneralSubmit">
+                <i class="fas fa-paper-plane"></i> Enviar mensaje
+            </button>
+            <div class="feedback" id="contactGeneralFeedback"></div>
+        </form>
+    </div>
+</div>
+
+<!-- ===== MODAL DE COMPRA (mejorado) ===== -->
 <div class="modal-overlay" id="purchaseModal">
     <div class="modal">
         <div class="modal-header">
-            <h3><i class="fas fa-gem"></i> Confirmar compra</h3>
+            <h3><i class="fas fa-gem"></i> Comprar cuenta</h3>
             <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
         </div>
-        
         <div class="modal-body-scroll" id="modalBodyScroll">
-            <div class="detail-line">
-                <span>Cuenta</span>
-                <span id="modalMonto">$10,000</span>
+            <!-- Detalles de la compra -->
+            <div class="detail-box">
+                <div class="detail-line">
+                    <span>Cuenta</span>
+                    <span id="modalMonto">$10,000</span>
+                </div>
+                <div class="detail-line">
+                    <span>Precio</span>
+                    <span id="modalPrecio">$650 USD</span>
+                </div>
             </div>
-            <div class="detail-line">
-                <span>Precio</span>
-                <span id="modalPrecio">$650 USD</span>
-            </div>
+
             <div class="info-box">
                 <i class="fas fa-info-circle"></i> Deposita el monto exacto en USDT (TRC20) a la dirección mostrada.
             </div>
 
             <div class="qr-container">
                 <div id="qrcode"></div>
-                <div class="wallet-address-modal">
-                    <i class="fas fa-copy" id="copyModalWalletBtn"></i>
-                    TCAgtcQNCecCRn5fV7ZrMa5euFzSyzPUu5
+                <div class="wallet-address-modal" id="copyModalWalletBtn">
+                    <i class="fas fa-copy"></i> TCAgtcQNCecCRn5fV7ZrMa5euFzSyzPUu5
                 </div>
             </div>
 
-            <label for="whatsappInput"><i class="fab fa-whatsapp"></i> Número de WhatsApp</label>
-            <input type="tel" id="whatsappInput" placeholder="Ej: +51 987 654 321" />
-            
-            <label for="emailConfirmInput"><i class="fas fa-envelope"></i> Correo electrónico (para credenciales)</label>
-            <input type="email" id="emailConfirmInput" placeholder="tu@email.com" />
+            <!-- Formulario de compra: correo, teléfono, mensaje -->
+            <div class="form-group">
+                <label for="purchaseEmail"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                <input type="email" id="purchaseEmail" placeholder="tu@email.com" required />
+            </div>
+
+            <div class="form-group">
+                <label for="purchasePhone"><i class="fas fa-phone"></i> Teléfono</label>
+                <input type="tel" id="purchasePhone" placeholder="+51 987 654 321" required />
+            </div>
+
+            <div class="form-group">
+                <label for="purchaseMessage"><i class="fas fa-comment"></i> Mensaje (opcional)</label>
+                <textarea id="purchaseMessage" placeholder="Algún detalle adicional..." maxlength="200"></textarea>
+            </div>
         </div>
 
         <div class="modal-footer">
             <button class="btn-outline" id="modalCancelBtn">Cancelar</button>
-            <button class="btn-primary" id="modalConfirmBtn"><i class="fas fa-check-circle"></i> Enviar datos</button>
+            <button class="btn-primary" id="modalConfirmBtn">
+                <i class="fas fa-check-circle"></i> Confirmar compra
+            </button>
         </div>
     </div>
 </div>
@@ -869,23 +1071,28 @@
     const errorText = document.getElementById('errorText');
     const cuentasGrid = document.getElementById('cuentasGrid');
 
-    // Elementos del formulario de contacto
-    const contactForm = document.getElementById('contactForm');
-    const contactEmail = document.getElementById('contactEmail');
-    const contactMessage = document.getElementById('contactMessage');
-    const charCount = document.getElementById('charCount');
-    const contactFeedback = document.getElementById('contactFeedback');
-    const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+    // Contacto general
+    const contactModal = document.getElementById('contactModal');
+    const contactHeaderBtn = document.getElementById('contactHeaderBtn');
+    const contactModalClose = document.getElementById('contactModalClose');
+    const contactGeneralForm = document.getElementById('contactGeneralForm');
+    const contactGeneralEmail = document.getElementById('contactGeneralEmail');
+    const contactGeneralPhone = document.getElementById('contactGeneralPhone');
+    const contactGeneralMsg = document.getElementById('contactGeneralMsg');
+    const contactGeneralCount = document.getElementById('contactGeneralCount');
+    const contactGeneralFeedback = document.getElementById('contactGeneralFeedback');
+    const contactGeneralSubmit = document.getElementById('contactGeneralSubmit');
 
-    // Modal
-    const modal = document.getElementById('purchaseModal');
+    // Compra
+    const purchaseModal = document.getElementById('purchaseModal');
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     const modalCancelBtn = document.getElementById('modalCancelBtn');
     const modalConfirmBtn = document.getElementById('modalConfirmBtn');
     const modalMonto = document.getElementById('modalMonto');
     const modalPrecio = document.getElementById('modalPrecio');
-    const whatsappInput = document.getElementById('whatsappInput');
-    const emailConfirmInput = document.getElementById('emailConfirmInput');
+    const purchaseEmail = document.getElementById('purchaseEmail');
+    const purchasePhone = document.getElementById('purchasePhone');
+    const purchaseMessage = document.getElementById('purchaseMessage');
 
     let isLogin = true;
     let selectedAccount = null;
@@ -925,7 +1132,7 @@
                 const monto = Number(this.dataset.monto);
                 const precio = Number(this.dataset.precio);
                 selectedAccount = { monto, precio };
-                openModal(monto, precio);
+                openPurchaseModal(monto, precio);
             });
         });
     }
@@ -944,69 +1151,153 @@
         });
     }
 
-    // ============ MODAL ============
-    function openModal(monto, precio) {
+    // ============ MODAL DE COMPRA ============
+    function openPurchaseModal(monto, precio) {
         modalMonto.textContent = `$${monto.toLocaleString()}`;
         modalPrecio.textContent = `$${precio} USD`;
         
         const user = auth.currentUser;
         if (user && user.email) {
-            emailConfirmInput.value = user.email;
+            purchaseEmail.value = user.email;
         } else {
-            emailConfirmInput.value = '';
+            purchaseEmail.value = '';
         }
-        whatsappInput.value = '';
+        purchasePhone.value = '';
+        purchaseMessage.value = '';
         
         generateQR(WALLET_ADDRESS);
         
-        modal.classList.add('active');
+        purchaseModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
-        const scrollContainer = document.getElementById('modalBodyScroll');
-        if (scrollContainer) {
-            scrollContainer.scrollTop = 0;
-        }
     }
 
-    function closeModal() {
-        modal.classList.remove('active');
+    function closePurchaseModal() {
+        purchaseModal.classList.remove('active');
         document.body.style.overflow = '';
+        selectedAccount = null;
     }
 
-    modalCloseBtn.addEventListener('click', closeModal);
-    modalCancelBtn.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) closeModal();
+    modalCloseBtn.addEventListener('click', closePurchaseModal);
+    modalCancelBtn.addEventListener('click', closePurchaseModal);
+    purchaseModal.addEventListener('click', function(e) {
+        if (e.target === purchaseModal) closePurchaseModal();
     });
 
+    // ============ CONFIRMAR COMPRA ============
     modalConfirmBtn.addEventListener('click', function() {
-        const whatsapp = whatsappInput.value.trim();
-        const email = emailConfirmInput.value.trim();
+        const email = purchaseEmail.value.trim();
+        const phone = purchasePhone.value.trim();
+        const message = purchaseMessage.value.trim();
 
-        if (!whatsapp) {
-            alert('⚠️ Por favor, ingresa tu número de WhatsApp.');
-            whatsappInput.focus();
-            return;
-        }
         if (!email) {
             alert('⚠️ Por favor, ingresa tu correo electrónico.');
-            emailConfirmInput.focus();
+            purchaseEmail.focus();
+            return;
+        }
+        if (!phone) {
+            alert('⚠️ Por favor, ingresa tu número de teléfono.');
+            purchasePhone.focus();
             return;
         }
         if (!selectedAccount) return;
 
-        alert(`✅ ¡Gracias! Hemos recibido tu solicitud.\n\n📧 Las credenciales serán enviadas a:\n${email}\n\n📱 Te contactaremos por WhatsApp al:\n${whatsapp}\n\nRevisa tu bandeja de entrada en unos minutos.`);
+        // Mostrar resumen
+        alert(`✅ ¡Compra confirmada!\n\n📧 Correo: ${email}\n📱 Teléfono: ${phone}\n💬 Mensaje: ${message || 'Ninguno'}\n\n💰 Cuenta: $${selectedAccount.monto.toLocaleString()}\n💵 Precio: $${selectedAccount.precio} USD\n\n📤 Envía el monto exacto a la dirección mostrada.\n\nTe contactaremos para entregar las credenciales.`);
 
-        closeModal();
-        whatsappInput.value = '';
-        emailConfirmInput.value = '';
-        selectedAccount = null;
+        closePurchaseModal();
     });
 
+    // ============ CONTACTO GENERAL ============
+    function openContactModal() {
+        const user = auth.currentUser;
+        if (user && user.email) {
+            contactGeneralEmail.value = user.email;
+        }
+        contactGeneralPhone.value = '';
+        contactGeneralMsg.value = '';
+        contactGeneralCount.textContent = '0';
+        contactGeneralFeedback.style.display = 'none';
+        contactModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeContactModal() {
+        contactModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    contactHeaderBtn.addEventListener('click', openContactModal);
+    contactModalClose.addEventListener('click', closeContactModal);
+    contactModal.addEventListener('click', function(e) {
+        if (e.target === contactModal) closeContactModal();
+    });
+
+    // Contador de caracteres
+    contactGeneralMsg.addEventListener('input', function() {
+        const len = this.value.length;
+        contactGeneralCount.textContent = len;
+        contactGeneralCount.style.color = len >= 190 ? '#b91c1c' : '#94a3b8';
+    });
+
+    // Envío de contacto general
+    contactGeneralForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = contactGeneralEmail.value.trim();
+        const phone = contactGeneralPhone.value.trim();
+        const message = contactGeneralMsg.value.trim();
+
+        if (!email || !phone || !message) {
+            showContactFeedback('Por favor, completa todos los campos.', 'error');
+            return;
+        }
+
+        contactGeneralSubmit.disabled = true;
+        contactGeneralSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        try {
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('message', message);
+            formData.append('_subject', 'Consulta desde Fondeo 2.2');
+
+            const response = await fetch('https://formspree.io/f/xzdnrvgq', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                showContactFeedback('✅ ¡Mensaje enviado! Te responderemos pronto.', 'success');
+                contactGeneralMsg.value = '';
+                contactGeneralCount.textContent = '0';
+                contactGeneralPhone.value = '';
+            } else {
+                showContactFeedback('❌ Error al enviar. Intenta nuevamente.', 'error');
+            }
+        } catch (error) {
+            showContactFeedback('❌ Error de conexión.', 'error');
+        }
+
+        contactGeneralSubmit.disabled = false;
+        contactGeneralSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
+    });
+
+    function showContactFeedback(msg, type) {
+        contactGeneralFeedback.textContent = msg;
+        contactGeneralFeedback.className = 'feedback ' + type;
+        contactGeneralFeedback.style.display = 'block';
+        clearTimeout(window._contactTimeout);
+        window._contactTimeout = setTimeout(() => {
+            contactGeneralFeedback.style.display = 'none';
+        }, 6000);
+    }
+
+    // ============ COPIAR DIRECCIÓN ============
     document.getElementById('copyModalWalletBtn')?.addEventListener('click', function() {
         navigator.clipboard?.writeText(WALLET_ADDRESS).then(() => {
-            alert('✅ Dirección copiada al portapapeles');
+            alert('✅ Dirección copiada');
         }).catch(() => {
             const ta = document.createElement('textarea');
             ta.value = WALLET_ADDRESS;
@@ -1020,7 +1311,7 @@
 
     document.getElementById('copyWalletBtn')?.addEventListener('click', function() {
         navigator.clipboard?.writeText(WALLET_ADDRESS).then(() => {
-            alert('✅ Dirección copiada al portapapeles');
+            alert('✅ Dirección copiada');
         }).catch(() => {
             const ta = document.createElement('textarea');
             ta.value = WALLET_ADDRESS;
@@ -1032,15 +1323,13 @@
         });
     });
 
-    // ============ ACTUALIZAR UI SEGÚN AUTENTICACIÓN ============
+    // ============ AUTH ============
     function updateUI(user) {
         if (user) {
             authSection.classList.add('hidden');
             homeSection.classList.remove('hidden');
             userEmail.textContent = user.email || 'usuario';
             renderCuentas();
-            // Rellenar email de contacto con el del usuario
-            if (contactEmail) contactEmail.value = user.email || '';
         } else {
             authSection.classList.remove('hidden');
             homeSection.classList.add('hidden');
@@ -1051,7 +1340,6 @@
         }
     }
 
-    // ============ MODO LOGIN / REGISTRO ============
     function setAuthMode(login) {
         isLogin = login;
         if (login) {
@@ -1078,7 +1366,7 @@
         const password = passwordInput.value.trim();
 
         if (!email || !password) {
-            showError('Por favor, completa todos los campos.');
+            showError('Completa todos los campos.');
             return;
         }
         if (password.length < 6) {
@@ -1093,7 +1381,6 @@
                 await auth.createUserWithEmailAndPassword(email, password);
             }
         } catch (error) {
-            console.error(error);
             let msg = error.message;
             if (error.code === 'auth/user-not-found') msg = 'Usuario no encontrado.';
             else if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta.';
@@ -1109,8 +1396,9 @@
         if (e.key === 'Enter' && !authSection.classList.contains('hidden')) {
             handleAuthAction();
         }
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
+        if (e.key === 'Escape') {
+            if (purchaseModal.classList.contains('active')) closePurchaseModal();
+            if (contactModal.classList.contains('active')) closeContactModal();
         }
     });
 
@@ -1123,90 +1411,6 @@
         auth.signOut();
     });
 
-    // ============ CONTADOR DE CARACTERES ============
-    contactMessage.addEventListener('input', function() {
-        const len = this.value.length;
-        charCount.textContent = len;
-        if (len >= 190) {
-            charCount.style.color = '#b91c1c';
-        } else {
-            charCount.style.color = '#94a3b8';
-        }
-    });
-
-    // ============ ENVÍO DEL FORMULARIO DE CONTACTO ============
-    contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const email = contactEmail.value.trim();
-        const message = contactMessage.value.trim();
-
-        // Validaciones
-        if (!email) {
-            showContactFeedback('Por favor, ingresa tu correo electrónico.', 'error');
-            contactEmail.focus();
-            return;
-        }
-        if (!message) {
-            showContactFeedback('Por favor, escribe tu mensaje.', 'error');
-            contactMessage.focus();
-            return;
-        }
-        if (message.length > 200) {
-            showContactFeedback('El mensaje no puede superar los 200 caracteres.', 'error');
-            return;
-        }
-
-        // Deshabilitar botón durante el envío
-        contactSubmitBtn.disabled = true;
-        contactSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-
-        try {
-            // Enviar a Formspree
-            const formData = new FormData();
-            formData.append('email', email);
-            formData.append('message', message);
-            formData.append('_subject', 'Consulta desde Fondeo Instantáneo');
-
-            const response = await fetch('https://formspree.io/f/xzdnrvgq', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                showContactFeedback('✅ ¡Mensaje enviado! Te responderemos a la brevedad.', 'success');
-                contactMessage.value = '';
-                charCount.textContent = '0';
-                // No limpiamos el email para comodidad del usuario
-            } else {
-                const data = await response.json();
-                showContactFeedback('❌ Error al enviar: ' + (data.error || 'intenta nuevamente.'), 'error');
-            }
-        } catch (error) {
-            console.error(error);
-            showContactFeedback('❌ Error de conexión. Verifica tu internet.', 'error');
-        }
-
-        // Restaurar botón
-        contactSubmitBtn.disabled = false;
-        contactSubmitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
-    });
-
-    function showContactFeedback(msg, type) {
-        contactFeedback.textContent = msg;
-        contactFeedback.className = 'contact-feedback ' + type;
-        contactFeedback.style.display = 'block';
-        // Ocultar después de 6 segundos
-        clearTimeout(window._feedbackTimeout);
-        window._feedbackTimeout = setTimeout(() => {
-            contactFeedback.style.display = 'none';
-        }, 6000);
-    }
-
-    // ============ OBSERVADOR DE AUTENTICACIÓN ============
     auth.onAuthStateChanged(user => {
         updateUI(user);
     });
